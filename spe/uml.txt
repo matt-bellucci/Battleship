@@ -11,3 +11,9 @@ Description des classes :
 
 	Classe DATA : 
 
+
+Global description :
+	At the beginning of the round, the player chooses a square to shoot. Its coordinate and the click are read with the Controller class.
+	The coordinate is sent to the other computer with the Network class.
+	The other computer send the result of the shot : shot in the water, hit or hit and sunk (respectively '0','1' or '2')
+	The Data class is then modified depending on the value received, which will change the display, handled by the GUI class
