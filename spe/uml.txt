@@ -1,4 +1,4 @@
-Description du fonctionnement
+Description du fonctionnement global :
 	
 	Au début du tour, le joueur choisit une case sur laquelle tirer, la coordonnée et le click sont récupérés grâce à la classe Controller.
 	La coordonnée de case est envoyée à l'autre ordinateur via la classe Network.
@@ -9,5 +9,5 @@ Description du fonctionnement
 
 Description des classes :
 
-	Classe DATA :
+	Classe DATA : 
 
