@@ -15,8 +15,7 @@ public class IHM extends JFrame {
 
     public static final Color BACKGROUND_COLOR = new Color(0,0,0);
     JPanel container = new JPanel();
-   
-    
+    Menu menu = new Menu();
     
     public IHM(){
 
@@ -32,7 +31,7 @@ public class IHM extends JFrame {
 	container.setLayout(new GridLayout());
 
 	// Menu
-	//this.setJMenuBar(menu);
+	this.setJMenuBar(menu);
 	
 	// Ajout du plan de l'infrastructure au conteneur principal
 	container.add(new Button("Cliquer pour commencer"));
