@@ -1,0 +1,19 @@
+Description du fonctionnement global :
+	
+	Au début du tour, le joueur choisit une case sur laquelle tirer, la coordonnée et le click sont récupérés grâce à la classe Controller.
+	La coordonnée de case est envoyée à l'autre ordinateur via la classe Network.
+	L'autre ordinateur envoie le résultat du tir, coup dans l'eau, touché ou touché coulé (respectivement '0','1' ou '2')
+	La classe Data est ensuite modifié en fonction de la valeur reçue,ce qui actualisera l'affichage, géré par la classe IHM.
+
+
+
+Description des classes :
+
+	Classe DATA : 
+
+
+Global description :
+	At the beginning of the round, the player chooses a square to shoot. Its coordinate and the click are read with the Controller class.
+	The coordinate is sent to the other computer with the Network class.
+	The other computer send the result of the shot : shot in the water, hit or hit and sunk (respectively '0','1' or '2')
+	The Data class is then modified depending on the value received, which will change the display, handled by the GUI class

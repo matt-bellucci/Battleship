@@ -1,4 +1,5 @@
 # Battleship
-Mini projet java GM3
+Small project in Java
 
-Objectif : Implémenter un jeu bataille navale avec interface graphique (swing/javaFX ?) et communication réseau par Sockets.
+-Goal : Implement a battleship game with GUI (Swing or JavaFX) and network communications 	with Sockets.
+
