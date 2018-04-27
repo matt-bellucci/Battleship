@@ -1,4 +1,4 @@
-package fr.insarouen.model;
+package fr.insarouen.battleship.model;
 
 public class PlayerInGame extends Player {
 
