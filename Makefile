@@ -1,5 +1,5 @@
 SRCDIR=src
-PKGVIEW=fr/insarouen/view
+PKG=fr/insarouen/battleship
 SRCTEST=src/tests
 LIBDIR = lib
 BINDIR = bin
@@ -11,5 +11,17 @@ JAVAFLAGS = -classpath $(BINDIR) -sourcepath $(SRCDIR) -d $(BINDIR)
 
 all : $(BINDIR)/$(EXEC)
 
-$(PKGVIEW)/%.class : $(SRCDIR)/$(PKGVIEW)/%.java
+%.class : $(SRCDIR)/$(PKG)/%.java
+	$(CC) $(JAVAFLAGS) $<
+
+view/%.class : $(SRCDIR)/$(PKG)/view/%.java
+	$(CC) $(JAVAFLAGS) $<
+
+model/%.class : $(SRCDIR)/$(PKG)/model/%.java
+	$(CC) $(JAVAFLAGS) $<
+
+controller/%.class : $(SRCDIR)/$(PKG)/controller/%.java
+	$(CC) $(JAVAFLAGS) $<
+
+net/%.class : $(SRCDIR)/$(PKG)/net/%.java
 	$(CC) $(JAVAFLAGS) $<
