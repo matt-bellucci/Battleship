@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.insarouen.view;
+package fr.insarouen.battleship.view;
 
 import javax.swing.*;
 import java.awt.*;

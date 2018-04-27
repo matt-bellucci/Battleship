@@ -1,4 +1,4 @@
-package fr.insarouen.view;
+package fr.insarouen.battleship.view;
 
 import javax.swing.JPanel;
 

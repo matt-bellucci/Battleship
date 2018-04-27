@@ -1,10 +1,7 @@
-/**
- * 
- */
-package fr.insarouen;
+package fr.insarouen.battleship;
 
 import fr.insarouen.*;
-import fr.insarouen.view.IHM;
+import fr.insarouen.battleship.view.IHM;
 
 /**
  * @author david

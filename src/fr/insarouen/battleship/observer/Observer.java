@@ -1,4 +1,4 @@
-package fr.insarouen.observer;
+package fr.insarouen.battleship.observer;
 
 public interface Observer {
 
