@@ -5,26 +5,40 @@ package fr.insarouen.battleship.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.*;
+import java.awt.event.*;
+
+import fr.insarouen.battleship.net.*;
 
 /**
- * @author david
+ * Classe IHM : contient tous les objets graphiques de la fenêtre utilisateur Battleship.
+ * 
+ * @author David ALBERT
  *
  */
 public class IHM extends JFrame {
 
     public static final Color BACKGROUND_COLOR = new Color(0,0,0);
-    JPanel container = new JPanel();
-    Menu menu = new Menu();
     
-    public IHM(){
+    JPanel container = new JPanel();
+    Menu menu;
+    
+	BattleshipClient com;
+    
+    public IHM(final BattleshipClient com){
 
 	// Initialiser fenêtre
 	super("BattleShip");
+	this.com = com;
+	this.menu =  new Menu(com.send("LIST"));
 	this.setSize(1000,600);
 	this.setBackground(BACKGROUND_COLOR);
 	this.setLocationRelativeTo(null); //au centre
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arrête le programme quand on appuie sur la croix
+	this.addWindowListener(new WindowAdapter() {
+		  public void windowClosing(WindowEvent we) {
+			com.send("CLOSE");
+		    System.exit(0);
+		  }
+		});
 	this.setResizable(true); //possibilité de redimensionner la fenêtre
 
 	// Paramétrage du conteneur principal

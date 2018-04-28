@@ -27,10 +27,17 @@ public class TestClient {
 		BufferedReader reader = new BufferedReader(
 							   new InputStreamReader(System.in));
 
+		BufferedInputStream reader2 = new BufferedInputStream(connexion.getInputStream());
+		
 	    while (str != "FIN") {
 	    	System.out.println("Texte à envoyer : ");
 	        str = reader.readLine();
 	        out.print(str);
+	        
+	        String response = read();
+
+            System.out.println("\t * " + name + " : Réponse reçue " + response);
+            
 	    }
 	    
 	} catch (UnknownHostException e) {
@@ -43,4 +50,5 @@ public class TestClient {
 	    } catch (IOException e) {} 
 	}
     }
+   
 }
