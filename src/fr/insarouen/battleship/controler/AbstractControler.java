@@ -16,7 +16,9 @@ public abstract class AbstractControler {
 	}
 	
 	public abstract void newPlayer();
-
+	
+	public abstract void newPlayer(String name);
+	
 	public abstract void rm();
 	
 }

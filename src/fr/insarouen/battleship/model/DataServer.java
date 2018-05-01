@@ -1,9 +1,14 @@
 package fr.insarouen.battleship.model;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 
-public class DataServer {
+import fr.insarouen.battleship.observer.Observable;
+import fr.insarouen.battleship.observer.Observer;
+
+public class DataServer implements Observable{
 	private Players players;
+	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
 	public DataServer(){
 		this.players = new Players();
@@ -14,10 +19,36 @@ public class DataServer {
 	}
 	
 	public void newPlayer(InetAddress ip){
-		players.add(ip);
+		this.players.add(ip);
+		notifyObserver(getPlayersList());
+	}
+	
+	public void newPlayer(String name, InetAddress ip){
+		this.players.add(name, ip);
+		notifyObserver(getPlayersList());
+		
 	}
 	
 	public void removePlayer(InetAddress ip){
-		players.remove(ip);
+		this.players.remove(ip);
+		notifyObserver(getPlayersList());
+	}
+
+	@Override
+	public void addObserver(Observer obs) {
+		this.listObserver.add(obs);
+	}
+
+	@Override
+	public void removeObserver() {
+		
+	}
+
+	@Override
+	public void notifyObserver(String str) {
+		for (Observer obs : listObserver){
+			obs.update(str);
+		}
+		
 	}
 }

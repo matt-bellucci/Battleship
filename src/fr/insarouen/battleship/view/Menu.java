@@ -18,37 +18,20 @@ public class Menu extends JMenuBar {
 	
 	
 	public Menu(String listAdv){
-	
-
-	    // Menu
+		// Menu
 		try {
-		initAdv(listAdv);
+		    
+			this.newGame.add(listAdv);
 		} catch (StringIndexOutOfBoundsException e){
 			e.printStackTrace();
 		}
 	    this.newGame.add(ia);
 	    
-	    
 	    this.add(newGame);
 	    this.add(stats);
-	    this.add(aide);
-	        
-	  
+	    this.add(aide); 
 	}
 	
-	private void initAdv(String listAdv) throws StringIndexOutOfBoundsException {
-		int taille = lim.length();
-		int i=0;
-		while (i+taille<listAdv.length()){
 
-			int l1= listAdv.indexOf(lim,i);
-			int l2= listAdv.indexOf(lim,i+taille);
-			String str = listAdv.substring(l1, l2);
-			i+=taille+str.length();
-			this.newGame.add(new JMenuItem(
-		    		str
-		    		));
-		}
-	}
 
 }

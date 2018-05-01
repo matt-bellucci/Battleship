@@ -33,13 +33,17 @@ public class Players {
 	public String toString(){
 		String str = new String(" ");
 		for (Player p : player){
-			str += p.toString() + " \n";
+			str += p.toString() + "\n";
 		}
 		return str;
 	}
 
 	public void add(InetAddress ip) {
 		player.add(new Player(ip));
+	}
+	
+	public void add(String name, InetAddress ip) {
+		player.add(new Player(name,ip));
 	}
 
 	public void remove(InetAddress ip) {

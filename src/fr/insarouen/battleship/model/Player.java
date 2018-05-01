@@ -37,7 +37,8 @@ public class Player {
 		return this.ip;
 	}
 	
+	
 	public String toString(){
-		return "Joueur:" + getName() + "-->"+ getIP().getHostAddress();
+		return getName() + "-->"+ getIP().getHostAddress();
 	}
 }

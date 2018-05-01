@@ -4,6 +4,7 @@
 package fr.insarouen.battleship.view;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -17,47 +18,74 @@ import fr.insarouen.battleship.net.*;
  */
 public class IHM extends JFrame {
 
+	// Constantes de l'Interface graphique
+	public static final String GAME_NAME = "Battleship GM";
+	public static final int WINDOW_LENGTH = 400;
+	public static final int WINDOW_WIDTH = 600;
     public static final Color BACKGROUND_COLOR = new Color(0,0,0);
     
+    // Conteneurs de l'interface graphique
     JPanel container = new JPanel();
     Menu menu;
     
+    // Lien de communication avec le serveur
 	BattleshipClient com;
     
+	
     public IHM(final BattleshipClient com){
 
-	// Initialiser fenêtre
-	super("BattleShip");
-	this.com = com;
-	this.menu =  new Menu(com.send("LIST"));
-	this.setSize(1000,600);
-	this.setBackground(BACKGROUND_COLOR);
-	this.setLocationRelativeTo(null); //au centre
-	this.addWindowListener(new WindowAdapter() {
-		  public void windowClosing(WindowEvent we) {
-			com.send("CLOSE");
-		    System.exit(0);
-		  }
-		});
-	this.setResizable(true); //possibilité de redimensionner la fenêtre
-
-	// Paramétrage du conteneur principal
-	container.setLayout(new GridLayout());
-
-	// Menu
-	this.setJMenuBar(menu);
+    	// Initialiser fenêtre
+    	super(GAME_NAME);
+    	this.com = com;
+    	this.menu =  new Menu(com.send("LIST"));
+    	
+    	// Gestion fenêtre
+    	this.setSize(WINDOW_LENGTH,WINDOW_WIDTH);
+    	this.setBackground(BACKGROUND_COLOR);
+    	this.setLocationRelativeTo(null); //au centre
 	
-	// Ajout du plan de l'infrastructure au conteneur principal
-	container.add(new Button("Cliquer pour commencer"));
+    	// Fermeture de la connexion Socket et du programme lors de la fermeture de la fenêtre
+    	this.addWindowListener(new WindowAdapter() {
+    		public void windowClosing(WindowEvent we) {
+    			com.send("CLOSE");
+    			System.exit(0);
+    		}
+    	});
+    	this.setResizable(true); //possibilité de redimensionner la fenêtre
 	
-	// Ajout West
+    	// Paramétrage du conteneur principal
+    	container.setLayout(new BorderLayout());
+    	
+    	// Menu
+    	this.setJMenuBar(menu);
+    	
+    	// Démarrage partie
+    	
+    	container.add(new ListPlayers(com, com.send("LIST")),BorderLayout.CENTER);
+    	
+    	
+    // EXEMPLES UTILISATION SWING
 	
-
-
-	this.setContentPane(container);
+	//container.setBorder(BorderFactory.createTitledBorder("Ceci est un bord"));
+	//container.add(new ValidateButton("Vouvouzella"));
+	//container.add(new JLabel("MonJLabel", SwingConstants.CENTER));
+	//container.add(new JCheckBox("Ma box", true));
+	//JRadioButton rb1 = new JRadioButton("Mode normal");
+	//JRadioButton rb2 = new JRadioButton("Mode WTF");
+	//ButtonGroup bg = new ButtonGroup();
+	//bg.add(rb1);
+	//bg.add(rb2);
+	//container.add(rb1,BorderLayout.EAST);
+	//container.add(rb2,BorderLayout.EAST);
 	
-	//Afficher la fenêtre
-	this.setVisible(true);
 	
+    	this.setContentPane(container);
+	
+    	//Afficher la fenêtre
+    	this.setVisible(true);
+    	
     }
-}
+    
+    
+}	
+	

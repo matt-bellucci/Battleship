@@ -17,6 +17,11 @@ public class BattleshipControler extends AbstractControler {
 	public void newPlayer() {
 		data.newPlayer(ip);
 	}
+	
+	@Override
+	public void newPlayer(String name) {
+		data.newPlayer(name,ip);
+	}
 
 	@Override
 	public void rm() {

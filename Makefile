@@ -9,7 +9,8 @@ EXEC = Battleship
 JAVAFLAGS = -classpath $(BINDIR) -sourcepath $(SRCDIR) -d $(BINDIR)
 
 
-all : $(BINDIR)/$(EXEC)
+all :  
+	$(CC) $(JAVAFLAGS) $(SRCDIR)/$(PKG)/*.java
 
 %.class : $(SRCDIR)/$(PKG)/%.java
 	$(CC) $(JAVAFLAGS) $<

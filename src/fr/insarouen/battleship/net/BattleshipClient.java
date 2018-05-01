@@ -18,40 +18,44 @@ public class BattleshipClient {
 	private BufferedInputStream reader = null;
 
 	   
-	   public BattleshipClient(String pHost, int pPort){
-	      
-	      try {
-	    	  connexion = new Socket(pHost,pPort);	   
-	    	  writer = new PrintWriter(connexion.getOutputStream(), true);
-	    	  reader = new BufferedInputStream(connexion.getInputStream());
-	            
-	      } catch (UnknownHostException e) {
-	         e.printStackTrace();
-	      } catch (IOException e) {
-	         e.printStackTrace();
-	      }
-	   }
+	public BattleshipClient(String pHost, int pPort) throws UnknownHostException, IOException {
+		connexion = new Socket(pHost,pPort);	  
+		try {
+			
+			writer = new PrintWriter(connexion.getOutputStream(), true);
+			reader = new BufferedInputStream(connexion.getInputStream());
+			
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
 	   
-	   public String send(String msg){
-		   String response = new String("Erreur");
-		   try {
-	            
-	            //On envoie le message au serveur
-	            writer.write(msg);
-	            writer.flush();  
+	public String send(String msg) {
+	   String response = new String("Erreur");
+	   try {
+            
+            //On envoie le message au serveur
+            writer.write(msg);
+            writer.flush();  
 
-	            System.out.println("Commande " + msg + " envoyée au serveur");
+            System.out.println("Commande " + msg + " envoyée au serveur");
 
-	            //On attend la réponse
-	            response = read();
-	            System.out.println("\t Réponse reçue " + response);
+            //On attend la réponse
+            response = read();
+            System.out.println("\t Réponse reçue " + response);
 
-	         } catch (IOException e1) {
+         } catch (ConnectException e) {
+				System.err.println("Serveur indisponible : veuillez réessayer plus tard");
+         }  catch (IOException e1) {
+            e1.printStackTrace();
+         } catch (NullPointerException e1) {
 	            e1.printStackTrace();
 	         }
-		   
-		   return response;
-	   }
+	   
+	   return response;
+   }
 
 	   private String read() throws IOException{      
 		   String response = "";

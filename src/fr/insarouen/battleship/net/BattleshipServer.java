@@ -4,7 +4,6 @@ import java.net.*;
 import java.io.*;
 
 import fr.insarouen.battleship.controler.BattleshipControler;
-import fr.insarouen.battleship.controler.Controler;
 import fr.insarouen.battleship.model.DataServer;
 
 /**
@@ -64,7 +63,7 @@ public class BattleshipServer {
                   Socket client = server.accept();
                   
                   //Une fois reçue, on la traite dans un thread séparé
-                  System.out.println("Connexion cliente reçue.");                  
+                  System.out.println("Connexion cliente reçue : "+client.getInetAddress());                  
                   Thread t = new ClientThread(client, new BattleshipControler(data, client.getInetAddress()));
                   t.start();
                   
