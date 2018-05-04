@@ -27,17 +27,22 @@ public class IHM extends JFrame {
     // Conteneurs de l'interface graphique
     JPanel container = new JPanel();
     Menu menu;
+    ListPlayers listing;
     
     // Lien de communication avec le serveur
-	BattleshipClient com;
+	ServerCommunicationThread com;
     
 	
-    public IHM(final BattleshipClient com){
+    public IHM(final ServerCommunicationThread com){
 
     	// Initialiser fenêtre
     	super(GAME_NAME);
+
     	this.com = com;
-    	this.menu =  new Menu(com.send("LIST"));
+    	
+    	this.menu =  new Menu();
+    	
+    	this.listing = new ListPlayers(com, "IA\n");
     	
     	// Gestion fenêtre
     	this.setSize(WINDOW_LENGTH,WINDOW_WIDTH);
@@ -60,8 +65,7 @@ public class IHM extends JFrame {
     	this.setJMenuBar(menu);
     	
     	// Démarrage partie
-    	
-    	container.add(new ListPlayers(com, com.send("LIST")),BorderLayout.CENTER);
+    	container.add(listing,BorderLayout.CENTER);
     	
     	
     // EXEMPLES UTILISATION SWING
@@ -86,6 +90,13 @@ public class IHM extends JFrame {
     	
     }
     
+    public void changeTitle(String title){
+    	this.setTitle(title);
+    }
+
+	public void updateListPlayers(String players) {
+		listing.setPlayersName(players);
+	}
     
 }	
 	

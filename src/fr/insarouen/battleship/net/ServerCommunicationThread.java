@@ -1,35 +1,43 @@
 package fr.insarouen.battleship.net;
 
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
-import fr.insarouen.battleship.controler.*;
-import fr.insarouen.battleship.observer.Observer;
 
-/**
- * Class ClientThread : Thread lancé côté server à chaque connexion d'un client. Il reçoit les messages, les traite, et renvoie une réponse.
- *
- * @author David ALBERT
- * @version 0
- * 
- */
+import fr.insarouen.battleship.view.IHM;
 
-public class ClientThread extends CommunicationThread implements Observer {
+public class ServerCommunicationThread extends CommunicationThread {
 
-    private static final String SEP = ":"; 
-    private AbstractControler controler;
-    private boolean closeConnexion = true;
-
-    public ClientThread(Socket socket, AbstractControler controler) throws IOException {
+	private IHM ihm;
+	private static final String SEP = ":";
+	private boolean closeConnexion = true;
+	
+	public ServerCommunicationThread(Socket socket) throws IOException {
 		super(socket);
-    	this.controler = controler;		
-    }
-   
-    @Override
-    public void run() {
-			 
-		System.err.println("Lancement du traitement de la connexion cliente");
+	}
+	
+	public ServerCommunicationThread(String pHost, int pPort) throws UnknownHostException, IOException {
+		super(pHost,pPort);
+		try {
+			writer = new PrintWriter(socket.getOutputStream(), true);
+			reader = new BufferedInputStream(socket.getInputStream());
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
+	
+
+	@Override
+	public void run() {
+		System.err.println("Lancement du traitement de la communication serveur");
 		closeConnexion = false;
 			
 		//tant que la connexion est active, on traite les demandes
@@ -45,8 +53,7 @@ public class ClientThread extends CommunicationThread implements Observer {
 						
 				//On affiche quelques infos
 				String debug = "";
-				debug = "Thread : " + Thread.currentThread().getName() + ". ";
-				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
+				debug += "Message du server : " + remote.getAddress().getHostAddress() +".";
 				debug += " Sur le port : " + remote.getPort() + ".\n";
 				debug += "\t -> Commande reçue : " + message + "\n";
 				System.err.println("\n" + debug);
@@ -71,12 +78,13 @@ public class ClientThread extends CommunicationThread implements Observer {
 		    }
 			 
 		}
-    }
-    
+			 
+	}
+	
 
 	@Override
-    public String receive(){  
-    	String response = "";
+	public String receive() {
+		String response = "";
     	int stream;
     	byte[] b = new byte[4096];
     	try {
@@ -84,19 +92,25 @@ public class ClientThread extends CommunicationThread implements Observer {
 	    	response = new String(b, 0, stream);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (StringIndexOutOfBoundsException e) {
+		}catch (StringIndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
     	return response;
-    }
-
+	}
 
 	@Override
 	public void send(String msg) {
-		writer.write(msg);
-		writer.flush();
+		   try {
+	            //On envoie le message au serveur
+	            writer.write(msg);
+	            writer.flush();  
+
+	            System.out.println("Message pour Server : " + msg );
+	         } catch (NullPointerException e1) {
+		            e1.printStackTrace();
+		         }
 	}
-	
+
 	@Override
 	protected ArrayList<String> decode(String str) {
 		ArrayList<String> res = new ArrayList<String>();
@@ -118,44 +132,30 @@ public class ClientThread extends CommunicationThread implements Observer {
 			
 		return res;
 	}
-	
-    public void process(ArrayList<String> commande) {
-    	String toSend = "";
+
+	@Override
+	public void process(ArrayList<String> commande) {
 		switch(commande.get(0).toUpperCase()){
 		case "LIST":
-		    toSend = "LIST:"+controler.getPlayers();
-		    break;
-		case "NEW":
-		    if (commande.size()>1) {
-		    	controler.newPlayer(commande.get(1));
-		    }
-		    else {
-		    	controler.newPlayer();
-		    }
-		    break;
-		case "0":
-		    toSend = "PLOUF";
-		    break;
+		try {
+			ihm.updateListPlayers(commande.get(1));
+		} catch (NullPointerException e) {
+			System.out.println("Erreur de listing");
+		}
+		    	 break;
 		case "CLOSE":
-		    toSend = "CLOSE:Communication terminée"; 
-		    controler.removeObserver(this);
-		    controler.rm();
 		    closeConnexion = true;
 		    break;
 		default : 
-		    toSend = "Commande inconnu !";                     
+			ihm.changeTitle("Nouveau titre");
+			System.out.println("Traitement :" + commande.get(0));
 		    break;
 		}
-
-		//On envoie la réponse au client
-		send(toSend);
-		
 	}
 
-	@Override
-	public void update(String str) {
-		System.out.println("Mise à jour : "+ str);
-		send(str);
+	public void setIHM(IHM ihm) {
+		System.out.println("Done");
+		this.ihm = ihm;
 	}
 
 }

@@ -22,15 +22,23 @@ public class Battleship {
 	public static void main(String[] args) {
 			String host = "127.0.0.1";
 			int port = 1099;
+			
+			String name = "Inconnu";
+			if (args.length > 0){
+				name=args[0];
+			}
 
 			// Création d'une connexion socket
 			try {
-				BattleshipClient com = new BattleshipClient(host, port);
-				
-				com.send("NEW:Bernard");
+				ServerCommunicationThread com = new ServerCommunicationThread(host, port);
+				com.start();
+				com.send("NEW:"+name);
 				
 				// Lancement de l'IHM du jeu
 				IHM ihm = new IHM(com); 
+				
+				com.setIHM(ihm);
+				com.send("LIST");
 				
 			} catch (ConnectException e) {
 				System.err.println("Serveur indisponible : veuillez réessayer plus tard");
@@ -38,7 +46,9 @@ public class Battleship {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			} catch (IndexOutOfBoundsException e){
+				e.printStackTrace();
+			}
 		
 		
 	}

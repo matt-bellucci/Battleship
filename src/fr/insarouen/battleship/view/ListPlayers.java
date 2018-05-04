@@ -9,16 +9,19 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.insarouen.battleship.net.BattleshipClient;
+import fr.insarouen.battleship.net.ServerCommunicationThread;
 
 public class ListPlayers extends JPanel implements ActionListener {
+	
+	private static final String DEL = "\n";
 	
 	private JList<String> list;
 	private DefaultListModel<String> listModel;
 	
-	private String playerName;
+	private String playersName;
 	private JButton play = new JButton("");
 	
-	private BattleshipClient com;
+	private ServerCommunicationThread com;
 	
 	// Classe interne gérant les changement de sélection
 	class GestionSelection implements ListSelectionListener {
@@ -37,16 +40,17 @@ public class ListPlayers extends JPanel implements ActionListener {
 	}
 	
 	
-	public ListPlayers(BattleshipClient com, String u) {
+	public ListPlayers(ServerCommunicationThread com, String players) {
 		
 		this.com = com;
+		this.playersName =players;
 		
 		setBorder(BorderFactory.createTitledBorder("Choix adversaire"));
 		setLayout(new BorderLayout(3,5));
 		
 		
 		listModel = new DefaultListModel<String>();
-		setDefaultList(u);
+		setDefaultList(players);
 		
 		list = new JList<String>(listModel);
 		list.addListSelectionListener(new GestionSelection());
@@ -77,14 +81,27 @@ public class ListPlayers extends JPanel implements ActionListener {
 	
 	// Fonction qui permet de passer de la liste brut des joueur en listModel pour l'interface
 	private void setDefaultList(String str){
-		String lim = "\n";
-		int l1=0, l2=str.indexOf(lim,l1);
-		while (l2+1<str.length()){
-			String sstr = str.substring(l1, l2);
+		listModel.clear();
+		int l1 =0;
+		try {
+		    int l2=str.indexOf(DEL,l1);
+		    listModel.addElement(new String(str.substring(l1, l2)));
+		    while (l2<str.length()){
 			l1=l2+1;
-			l2=str.indexOf(lim, l1);
-			listModel.addElement(sstr);
-		}
+			l2=str.indexOf(DEL, l1);
+			listModel.addElement(new String(str.substring(l1, l2)));
+		    }
+		} catch (StringIndexOutOfBoundsException e){
+		    // System.err.println("Erreur");
+		} catch (IndexOutOfBoundsException e){
+		    // System.err.println("Erreur");
+			}
 	}
+
 	
+	public void setPlayersName(String players){
+		this.playersName = players;
+		setDefaultList(players);
+	}
+
 }

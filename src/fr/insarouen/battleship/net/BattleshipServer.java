@@ -54,23 +54,30 @@ public class BattleshipServer {
    public void open(){
       
       //Toujours dans un thread à part vu qu'il est dans une boucle infinie
-      Thread t = new Thread( new Runnable(){
+       Thread t = new Thread( new Runnable(){
          public void run(){
             while(isRunning == true){
-               
+            	
                try {
                   //On attend une connexion d'un client
                   Socket client = server.accept();
                   
                   //Une fois reçue, on la traite dans un thread séparé
-                  System.out.println("Connexion cliente reçue : "+client.getInetAddress());                  
-                  Thread t = new ClientThread(client, new BattleshipControler(data, client.getInetAddress()));
+                  System.out.println("Connexion cliente reçue : "+client.getInetAddress());
+                  
+                  // instanciation du contrôleur et de la vue (ici représenté par le canal de communication avec la vue réelle)
+                  ClientThread t = new ClientThread(client, new BattleshipControler(data, client.getInetAddress()));
+                  
+                  // Ajout du Thread comme observateur des données
+                  data.addObserver(t);
+                  
                   t.start();
                   
                } catch (IOException e) {
                   e.printStackTrace();
                }
             }
+            
             try {
                server.close();
             } catch (IOException e) {

@@ -3,6 +3,6 @@ package fr.insarouen.battleship.observer;
 public interface Observable {
 
 		public void addObserver(Observer obs);
-		public void removeObserver();
+		public void removeObserver(Observer obs);
 		public void notifyObserver(String str);
 }

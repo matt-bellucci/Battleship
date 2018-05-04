@@ -40,11 +40,11 @@ public class BattleshipClient {
             writer.write(msg);
             writer.flush();  
 
-            System.out.println("Commande " + msg + " envoyée au serveur");
+            System.out.println("Message pour Server : " + msg );
 
             //On attend la réponse
             response = read();
-            System.out.println("\t Réponse reçue " + response);
+            System.out.println("Réponse Server : " + response +"\n");
 
          } catch (ConnectException e) {
 				System.err.println("Serveur indisponible : veuillez réessayer plus tard");

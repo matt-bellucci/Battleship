@@ -15,7 +15,9 @@ public class DataServer implements Observable{
 	}
 	
 	public String getPlayersList(){
+		System.out.println(listObserver.size());
 		return players.toString();
+		
 	}
 	
 	public void newPlayer(InetAddress ip){
@@ -25,24 +27,25 @@ public class DataServer implements Observable{
 	
 	public void newPlayer(String name, InetAddress ip){
 		this.players.add(name, ip);
-		notifyObserver(getPlayersList());
+		notifyObserver("LIST:"+getPlayersList());
 		
 	}
 	
 	public void removePlayer(InetAddress ip){
 		this.players.remove(ip);
-		notifyObserver(getPlayersList());
+		notifyObserver("LIST:"+getPlayersList());
 	}
 
 	@Override
 	public void addObserver(Observer obs) {
 		this.listObserver.add(obs);
 	}
-
+	
 	@Override
-	public void removeObserver() {
-		
+	public void removeObserver(Observer obs) {
+		listObserver.remove(obs);
 	}
+
 
 	@Override
 	public void notifyObserver(String str) {
@@ -51,4 +54,8 @@ public class DataServer implements Observable{
 		}
 		
 	}
+
+	
+
+	
 }

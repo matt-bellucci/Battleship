@@ -3,6 +3,7 @@ package fr.insarouen.battleship.controler;
 import java.net.InetAddress;
 
 import fr.insarouen.battleship.model.DataServer;
+import fr.insarouen.battleship.observer.Observer;
 
 public class BattleshipControler extends AbstractControler {
 
@@ -28,5 +29,9 @@ public class BattleshipControler extends AbstractControler {
 		data.removePlayer(ip);
 	}
 	
+	@Override
+	public void removeObserver(Observer obs){
+		data.removeObserver(obs);
+	}
 
 }

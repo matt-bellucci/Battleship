@@ -16,7 +16,17 @@ public class Menu extends JMenuBar {
     private JMenuItem ia = new JMenuItem("IA");
     private JMenuItem item4 = new JMenuItem("Enregistrer sous");
 	
+    public Menu(){
+		// Menu
+		
+	    this.newGame.add(ia);
+	    
+	    this.add(newGame);
+	    this.add(stats);
+	    this.add(aide); 
+	}
 	
+    
 	public Menu(String listAdv){
 		// Menu
 		try {

@@ -15,12 +15,14 @@ public class TestNetwork {
     	 String host = "127.0.0.1";
     	 int port = 1099;
     	 
-    	 // Récupération-Initialisation des données
+    	 // Récupération-Initialisation des données- Instanciation du Modèle 
     	 DataServer data = new DataServer();
     	 
     	 // Ouverture du Serveur
     	 BattleshipServer serverThread = new BattleshipServer(host, port, data);
     	 serverThread.open();
     	 System.out.println("Serveur initialisé.");
+    	 
     }
+    
 }

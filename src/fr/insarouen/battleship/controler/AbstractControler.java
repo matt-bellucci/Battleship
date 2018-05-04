@@ -1,6 +1,7 @@
 package fr.insarouen.battleship.controler;
 
 import fr.insarouen.battleship.model.DataServer;
+import fr.insarouen.battleship.observer.Observer;
 
 public abstract class AbstractControler {
 	
@@ -20,5 +21,8 @@ public abstract class AbstractControler {
 	public abstract void newPlayer(String name);
 	
 	public abstract void rm();
+
+
+	public abstract void removeObserver(Observer obs);
 	
 }
