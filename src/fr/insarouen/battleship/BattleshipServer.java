@@ -8,7 +8,7 @@ import fr.insarouen.battleship.net.*;
  * @author David ALBERT
  *
  */
-public class TestNetwork {
+public class BattleshipServer {
 
     public static void main(String[] args){
     	
@@ -19,7 +19,7 @@ public class TestNetwork {
     	 DataServer data = new DataServer();
     	 
     	 // Ouverture du Serveur
-    	 BattleshipServer serverThread = new BattleshipServer(host, port, data);
+    	 ServerCommunication serverThread = new ServerCommunication(host, port, data);
     	 serverThread.open();
     	 System.out.println("Serveur initialisé.");
     	 

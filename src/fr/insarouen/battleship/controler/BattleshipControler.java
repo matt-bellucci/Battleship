@@ -34,4 +34,15 @@ public class BattleshipControler extends AbstractControler {
 		data.removeObserver(obs);
 	}
 
+	@Override
+	public void askNewGame(String name) {
+		Observer obs = data.getObserverByName(name);
+		obs.update("DEMANDEPARTIE:"+ip);
+	}
+
+	@Override
+	public boolean isAvailableName(String name) {
+		return data.isAvailableName(name);
+	}
+
 }

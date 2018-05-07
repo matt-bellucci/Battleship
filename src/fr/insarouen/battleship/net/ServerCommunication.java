@@ -7,14 +7,14 @@ import fr.insarouen.battleship.controler.BattleshipControler;
 import fr.insarouen.battleship.model.DataServer;
 
 /**
- * Class BattleshipServer : Gère les connexions des clients
+ * Thread de communication serveur, recoit les connexions clientes et les traitent
  *
  * @author David ALBERT
  * @version 0
  * 
  */
 
-public class BattleshipServer {
+public class ServerCommunication {
 
 
    //On initialise les attributs du server par défault
@@ -26,7 +26,7 @@ public class BattleshipServer {
    private ServerSocket server = null;
    private boolean isRunning = true;
    
-   public BattleshipServer(){
+   public ServerCommunication(){
       try {
          server = new ServerSocket(port, MAX_CONNEXIONS, InetAddress.getByName(host));
       } catch (UnknownHostException e) {
@@ -36,7 +36,7 @@ public class BattleshipServer {
       }
    }
    
-   public BattleshipServer(String pHost, int pPort, DataServer data){
+   public ServerCommunication(String pHost, int pPort, DataServer data){
       host = pHost;
       port = pPort;
       this.data = data;
@@ -66,7 +66,7 @@ public class BattleshipServer {
                   System.out.println("Connexion cliente reçue : "+client.getInetAddress());
                   
                   // instanciation du contrôleur et de la vue (ici représenté par le canal de communication avec la vue réelle)
-                  ClientThread t = new ClientThread(client, new BattleshipControler(data, client.getInetAddress()));
+                  ServerCommunicationThread t = new ServerCommunicationThread(client, new BattleshipControler(data, client.getInetAddress()));
                   
                   // Ajout du Thread comme observateur des données
                   data.addObserver(t);

@@ -12,7 +12,7 @@ import fr.insarouen.battleship.net.*;
  * @author David ALBERT
  *
  */
-public class Battleship {
+public class BattleshipClient {
 
 	/**
 	 * @param args
@@ -22,23 +22,16 @@ public class Battleship {
 	public static void main(String[] args) {
 			String host = "127.0.0.1";
 			int port = 1099;
-			
-			String name = "Inconnu";
-			if (args.length > 0){
-				name=args[0];
-			}
 
 			// Création d'une connexion socket
 			try {
-				ServerCommunicationThread com = new ServerCommunicationThread(host, port);
+				ClientCommunicationThread com = new ClientCommunicationThread(host, port);
 				com.start();
-				com.send("NEW:"+name);
 				
 				// Lancement de l'IHM du jeu
 				IHM ihm = new IHM(com); 
 				
 				com.setIHM(ihm);
-				com.send("LIST");
 				
 			} catch (ConnectException e) {
 				System.err.println("Serveur indisponible : veuillez réessayer plus tard");

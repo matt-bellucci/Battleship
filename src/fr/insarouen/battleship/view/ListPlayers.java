@@ -8,8 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import fr.insarouen.battleship.net.BattleshipClient;
-import fr.insarouen.battleship.net.ServerCommunicationThread;
+import fr.insarouen.battleship.net.ClientCommunicationThread;
 
 public class ListPlayers extends JPanel implements ActionListener {
 	
@@ -21,7 +20,7 @@ public class ListPlayers extends JPanel implements ActionListener {
 	private String playersName;
 	private JButton play = new JButton("");
 	
-	private ServerCommunicationThread com;
+	private ClientCommunicationThread com;
 	
 	// Classe interne gérant les changement de sélection
 	class GestionSelection implements ListSelectionListener {
@@ -40,7 +39,7 @@ public class ListPlayers extends JPanel implements ActionListener {
 	}
 	
 	
-	public ListPlayers(ServerCommunicationThread com, String players) {
+	public ListPlayers(ClientCommunicationThread com, String players) {
 		
 		this.com = com;
 		this.playersName =players;
@@ -74,7 +73,7 @@ public class ListPlayers extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent ev) {
 		if (ev.getSource() instanceof JButton) {
 			play.setText("Demande envoyée ..");
-			com.send("DemandePartie:"+list.getSelectedValue());	
+			com.send("DEMANDEPARTIE:"+list.getSelectedValue());	
 		} 
 	}
 	

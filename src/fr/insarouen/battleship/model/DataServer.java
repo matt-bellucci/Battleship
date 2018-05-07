@@ -15,14 +15,12 @@ public class DataServer implements Observable{
 	}
 	
 	public String getPlayersList(){
-		System.out.println(listObserver.size());
-		return players.toString();
-		
+		return players.list();
 	}
 	
 	public void newPlayer(InetAddress ip){
 		this.players.add(ip);
-		notifyObserver(getPlayersList());
+		notifyObserver("LIST:"+getPlayersList());
 	}
 	
 	public void newPlayer(String name, InetAddress ip){
@@ -35,6 +33,12 @@ public class DataServer implements Observable{
 		this.players.remove(ip);
 		notifyObserver("LIST:"+getPlayersList());
 	}
+	
+	public Observer getObserverByName(String name) {
+		int id = players.getId(players.getPlayerByName(name));
+		System.out.println("ID : "+ id);
+		return listObserver.get(id);
+	}
 
 	@Override
 	public void addObserver(Observer obs) {
@@ -43,7 +47,7 @@ public class DataServer implements Observable{
 	
 	@Override
 	public void removeObserver(Observer obs) {
-		listObserver.remove(obs);
+		this.listObserver.remove(obs);
 	}
 
 
@@ -54,6 +58,15 @@ public class DataServer implements Observable{
 		}
 		
 	}
+
+	
+	// A FAIRE
+	public boolean isAvailableName(String name) {
+		
+		return true;
+	}
+
+
 
 	
 

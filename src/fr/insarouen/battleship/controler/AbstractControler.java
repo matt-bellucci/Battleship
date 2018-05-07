@@ -24,5 +24,11 @@ public abstract class AbstractControler {
 
 
 	public abstract void removeObserver(Observer obs);
+
+
+	public abstract void askNewGame(String string);
+
+
+	public abstract boolean isAvailableName(String string);
 	
 }

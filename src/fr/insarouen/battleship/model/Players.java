@@ -3,6 +3,7 @@ package fr.insarouen.battleship.model;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Players {
 
@@ -14,29 +15,33 @@ public class Players {
 	
 	public Player getPlayerByName(String name){
 		Iterator<Player> it = player.iterator();
-		Player p = it.next();
-		while ((it.hasNext()) && (name.compareTo(p.getName()) != 0)) {
+		Player p = null;
+		try {
 			p= it.next();
+			while ((it.hasNext()) && (name.compareTo(p.getName()) != 0)) {
+				p= it.next();
+			}
+		} catch (NoSuchElementException e) {
+			
 		}
 		return p;
 	}
 	
 	public Player getPlayerByIP(InetAddress ip){
 		Iterator<Player> it = player.iterator();
-		Player p = it.next();
-		while ((it.hasNext()) && (ip.getHostAddress().compareTo(p.getIP().getHostAddress()) != 0)) {
-			p= it.next();
+		Player p = null;
+		try {
+			p = it.next();
+			while ((it.hasNext()) && (ip.getHostAddress().compareTo(p.getIP().getHostAddress()) != 0)) {
+				p= it.next();
+			}
+		} catch (NoSuchElementException e) {
+			
 		}
 		return p;
 	}
 	
-	public String toString(){
-		String str = new String(" ");
-		for (Player p : player){
-			str += p.toString() + "\n";
-		}
-		return str;
-	}
+	
 
 	public void add(InetAddress ip) {
 		player.add(new Player(ip));
@@ -48,5 +53,25 @@ public class Players {
 
 	public void remove(InetAddress ip) {
 		player.remove(getPlayerByIP(ip));	
+	}
+
+	public String list() {
+		String str = new String("");
+		for (Player p : player){
+			str += p.getName() + "\n";
+		}
+		return str;
+	}
+	
+	public String toString(){
+		String str = new String(" ");
+		for (Player p : player){
+			str += p.toString() + "\n";
+		}
+		return str;
+	}
+
+	public int getId(Player p) {
+		return player.indexOf(p);
 	}
 }
