@@ -9,11 +9,14 @@ import fr.insarouen.battleship.observer.Observer;
 public class DataServer implements Observable{
 	private Players players;
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
+	private Games games;
 	
 	public DataServer(){
 		this.players = new Players();
 	}
 	
+	
+	// 
 	public String getPlayersList(){
 		return players.list();
 	}

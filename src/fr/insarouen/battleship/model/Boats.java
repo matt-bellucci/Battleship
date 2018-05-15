@@ -1,5 +1,14 @@
 package fr.insarouen.battleship.model;
 
-public class Boats {
+import java.util.ArrayList;
 
+public class Boats {
+	
+	private ArrayList<Boat> boat;
+	
+	public Boats(){
+		this.boat = new ArrayList<Boat>();
+	}
+	
+	
 }
