@@ -141,6 +141,11 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 		case "DEMANDEPARTIE":
 			controler.askNewGame(commande.get(1));
 			break;
+
+		case "REPONSEPARTIE":
+			controler.answerNewGame(commande.get(1),commande.get(2));
+			break;
+
 		case "NEW":
 		    if (commande.size()>1) {
 		    	controler.newPlayer(commande.get(1));

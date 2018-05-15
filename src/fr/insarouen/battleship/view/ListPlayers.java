@@ -102,5 +102,9 @@ public class ListPlayers extends JPanel implements ActionListener {
 		this.playersName = players;
 		setDefaultList(players);
 	}
+	
+	public void setButtonText(String str){
+		this.play.setText(str);
+	}
 
 }

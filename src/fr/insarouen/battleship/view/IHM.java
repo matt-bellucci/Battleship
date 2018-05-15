@@ -82,7 +82,11 @@ public class IHM extends JFrame {
 		int option = jop.showConfirmDialog(null, "Voulez-vous jouer contre " +str+" ?","Demande de partie", JOptionPane.YES_NO_OPTION,  JOptionPane.QUESTION_MESSAGE);
 		if (option != JOptionPane.NO_OPTION && option != JOptionPane.CLOSED_OPTION){
 			System.out.println("Réponse oui");
+			com.send("REPONSEPARTIE:"+str+":oui");
 	    	battleInterface(str);
+		}
+		else {
+			com.send("REPONSEPARTIE:"+str+":non");
 		}
 	}
 	private void infoPlayer(){
@@ -118,6 +122,10 @@ public class IHM extends JFrame {
     	
 	}
 	
+	public void requestRefused(String name){
+		this.listing.setButtonText("Demande de "+name+"refusée.");
+	}
+	
 	private void opponentChoiceInterface(){
 		// On efface tous les composants du conteneur principal
 		container.removeAll();
@@ -148,7 +156,7 @@ public class IHM extends JFrame {
     	
 	}
 	
-	private void battleInterface(String name){
+	public void battleInterface(String name){
 
 		container.removeAll();
 		

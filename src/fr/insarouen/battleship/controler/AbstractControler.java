@@ -30,5 +30,8 @@ public abstract class AbstractControler {
 
 
 	public abstract boolean isAvailableName(String string);
+
+
+	public abstract void answerNewGame(String sdvName, String answer);
 	
 }

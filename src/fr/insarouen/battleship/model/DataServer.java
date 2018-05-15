@@ -20,23 +20,18 @@ public class DataServer implements Observable{
 	
 	public void newPlayer(InetAddress ip){
 		this.players.add(ip);
-		notifyObserver("LIST:"+getPlayersList());
 	}
 	
 	public void newPlayer(String name, InetAddress ip){
 		this.players.add(name, ip);
-		notifyObserver("LIST:"+getPlayersList());
-		
 	}
 	
 	public void removePlayer(InetAddress ip){
 		this.players.remove(ip);
-		notifyObserver("LIST:"+getPlayersList());
 	}
 	
 	public Observer getObserverByName(String name) {
 		int id = players.getId(players.getPlayerByName(name));
-		System.out.println("ID : "+ id);
 		return listObserver.get(id);
 	}
 

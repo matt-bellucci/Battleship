@@ -173,6 +173,14 @@ public class ClientCommunicationThread extends CommunicationThread {
 		case "DEMANDEPARTIE":
 			ihm.askNewGame(commande.get(1));
 			break;
+		case "REPONSEPARTIE":
+			if (commande.get(2).compareTo("oui") == 0 ){
+				ihm.battleInterface(commande.get(1));
+			}
+			else {
+				ihm.requestRefused(commande.get(1));
+			}
+			break;
 		case "REQUEST":
 				request = commande.get(1);
 				inRequest = false;
