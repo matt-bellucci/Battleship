@@ -7,7 +7,7 @@ public class Grid {
 	
 	public void Grid(){
 	
-		this.size = 10;	// A VOIR
+		this.size = 10;
 		for (int i=0;i<this.size;i++){
 			for (int j=0;j<this.size;j++){
 				this.grid[i][j] = new Square();
@@ -16,15 +16,17 @@ public class Grid {
 		
 		}
 		
+		
 	public boolean isDiscovered(int x, int y) {
-			
-		if 	
+		return grid[x][y].Square.isDiscovered();	
 		}
 		
-	public void discovered(int x, int y) {
+	public void discover(int x, int y) {
+		this.grid[x][y].Square.discover();
 		}
 		
 	public int getId(int x, int y) {
-		return boat 
+		return  grid[x][y].Square.getId();
+		}
 		
 }

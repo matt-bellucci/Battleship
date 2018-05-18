@@ -1,10 +1,24 @@
 package fr.insarouen.battleship.model;
 
+import java.lang.Enum;
+
 public class Boat {
 
+	/*public enum orientation { 
+		Top, 
+		Bot, 
+		Left, 
+		Right;
+	} */
+
+	// private int coordTete = new int[2];
 	private int id;
 	private int length;
 	private int nbTouched =0;
+	
+	/*public orientation getOrientation(){
+		return this.orientation;
+	} */
 	
 	public void Boat(){
 		this.length = 3;
