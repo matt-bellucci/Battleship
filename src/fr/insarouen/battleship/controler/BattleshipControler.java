@@ -1,14 +1,16 @@
 package fr.insarouen.battleship.controler;
 
 import java.net.InetAddress;
+import java.util.NoSuchElementException;
 
 import fr.insarouen.battleship.model.DataServer;
 import fr.insarouen.battleship.observer.Observer;
 
 public class BattleshipControler extends AbstractControler {
 
-	InetAddress ip;
-	String name = "Inconnu";
+	private InetAddress ip;
+	private String name = "Inconnu";
+	private int idGame = -1;
 	
 	public BattleshipControler(DataServer data, InetAddress ip) {
 		super(data);
@@ -29,17 +31,26 @@ public class BattleshipControler extends AbstractControler {
 	}
 
 	@Override
-	public void rm() {
-		data.removePlayer(ip);
-		data.notifyObserver("LIST:"+data.getPlayersList());
+	public void removePlayer() {
+		if (idGame == -1){
+			data.removePlayer(name);
+			data.notifyObserver("LIST:"+data.getPlayersList());
+		}
+		else {
+			data.getGame(idGame).notifyObserver("FINPARTIE");
+		}
 	}
 	
 	@Override
 	public void removeObserver(Observer obs){
-		data.removeObserver(obs);
-		data.notifyObserver("LIST:"+data.getPlayersList());
+		if (idGame == -1){
+			data.removeObserver(obs);
+		}
+		else {
+			data.getGame(idGame).removeObserver(obs);
+		}
 	}
-
+	
 	@Override
 	public void askNewGame(String name) {
 		Observer obs = data.getObserverByName(name);
@@ -55,6 +66,33 @@ public class BattleshipControler extends AbstractControler {
 	@Override
 	public boolean isAvailableName(String name) {
 		return data.isAvailableName(name);
+	}
+
+	@Override
+	public void newGame(String nameP2) {
+
+		System.out.println("newGame :"+name + " vs "+ nameP2);
+		data.newGame(name,nameP2);
+		System.out.println("Nouvelle Partie : "+idGame);
+		data.notifyObserver("LIST:"+data.getPlayersList());
+	}
+
+	@Override
+	public void remove(Observer obs) {
+		try {
+			removeObserver(obs);
+			removePlayer();
+		} catch (NoSuchElementException e){
+			System.out.println("Element inconnu dans la liste");
+		} catch (ArrayIndexOutOfBoundsException e){
+			System.out.println("Element inconnu dans la liste");
+		}
+	}
+
+	@Override
+	public void setIdGame(int id) {
+		this.idGame = id;
+		
 	}
 
 

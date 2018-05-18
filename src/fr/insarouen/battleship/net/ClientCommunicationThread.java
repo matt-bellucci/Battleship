@@ -163,6 +163,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 	@Override
 	public void process(ArrayList<String> commande) {
 		switch(commande.get(0).toUpperCase()){
+		
 		case "LIST":
 			try {
 				ihm.updateListPlayers(commande.get(1));
@@ -170,9 +171,11 @@ public class ClientCommunicationThread extends CommunicationThread {
 				System.out.println("Erreur de listing");
 			}
 			break;	
+		
 		case "DEMANDEPARTIE":
 			ihm.askNewGame(commande.get(1));
 			break;
+		
 		case "REPONSEPARTIE":
 			if (commande.get(2).compareTo("oui") == 0 ){
 				ihm.battleInterface(commande.get(1));
@@ -181,13 +184,20 @@ public class ClientCommunicationThread extends CommunicationThread {
 				ihm.requestRefused(commande.get(1));
 			}
 			break;
+
+		case "IDPARTIE":
+				send("IDPARTIE:"+commande.get(1));
+			break;
+			
 		case "REQUEST":
 				request = commande.get(1);
 				inRequest = false;
 			break;
+		
 		case "CLOSE":
 		    closeConnexion = true;
 		    break;
+		
 		default : 
 			System.out.println("Traitement :" + commande.get(0));
 		    break;
@@ -195,7 +205,6 @@ public class ClientCommunicationThread extends CommunicationThread {
 	}
 
 	public void setIHM(IHM ihm) {
-		System.out.println("Done");
 		this.ihm = ihm;
 	}
 

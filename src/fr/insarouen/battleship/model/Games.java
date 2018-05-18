@@ -13,7 +13,18 @@ private ArrayList<Game> game;
 		this.game = new ArrayList<Game>();
 	}
 
-	
+	public void add(Game game){
+		this.game.add(game);
+	}
+
+	public Game get(int idGame) {
+		for (Game g : game){
+			if (g.getIdGame()==idGame){
+				return g;
+			}
+		}
+		return null;
+	}
 	
 
 }

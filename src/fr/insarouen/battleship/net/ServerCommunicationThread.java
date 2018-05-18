@@ -122,6 +122,38 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
     public void process(ArrayList<String> commande) {
     	String toSend = "";
 		switch(commande.get(0).toUpperCase()){
+		
+		case "LIST":
+		    toSend = "LIST:"+controler.getPlayers();
+		    break;
+
+		case "DEMANDEPARTIE":
+			controler.askNewGame(commande.get(1));
+			break;
+
+		case "REPONSEPARTIE":
+			controler.answerNewGame(commande.get(1),commande.get(2));
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e){}
+			if (commande.get(2).compareTo("oui")==0){
+				controler.newGame(commande.get(1));
+			}
+			break;
+
+		case "NEW":
+		    if (commande.size()>1) {
+		    	controler.newPlayer(commande.get(1));
+		    }
+		    else {
+		    	controler.newPlayer();
+		    }
+		    break;
+
+		case "IDPARTIE":
+				controler.setIdGame(Integer.parseInt(commande.get(1)));
+			break;
+			
 		case "REQUEST":
 			switch(commande.get(1).toUpperCase()){
 			case "AVAILABLENAME":
@@ -134,31 +166,10 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 				break;
 			}
 			break;
-		case "LIST":
-		    toSend = "LIST:"+controler.getPlayers();
-		    break;
-
-		case "DEMANDEPARTIE":
-			controler.askNewGame(commande.get(1));
-			break;
-
-		case "REPONSEPARTIE":
-			controler.answerNewGame(commande.get(1),commande.get(2));
-			break;
-
-		case "NEW":
-		    if (commande.size()>1) {
-		    	controler.newPlayer(commande.get(1));
-		    }
-		    else {
-		    	controler.newPlayer();
-		    }
-		    break;
-		
+			
 		case "CLOSE":
 		    toSend = "CLOSE:Communication terminée"; 
-		    controler.removeObserver(this);
-		    controler.rm();
+		    controler.remove(this);
 		    closeConnexion = true;
 		    break;
 		default : 

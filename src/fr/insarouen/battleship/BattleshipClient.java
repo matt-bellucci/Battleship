@@ -25,10 +25,13 @@ public class BattleshipClient {
 
 			// Création d'une connexion socket
 			try {
+				System.out.println("Initialisation Thread de Communication");
 				ClientCommunicationThread com = new ClientCommunicationThread(host, port);
+				System.out.println("Lancement Thread de Communication");
 				com.start();
 				
 				// Lancement de l'IHM du jeu
+				System.out.println("Lancement de l'IHM");
 				IHM ihm = new IHM(com); 
 				
 				com.setIHM(ihm);

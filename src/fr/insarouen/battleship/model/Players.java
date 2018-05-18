@@ -13,31 +13,25 @@ public class Players {
 		this.player = new ArrayList<Player>();
 	}
 	
-	public Player getPlayerByName(String name){
+	public Player getPlayerByName(String name) throws NoSuchElementException, ArrayIndexOutOfBoundsException {
 		Iterator<Player> it = player.iterator();
 		Player p = null;
-		try {
+		p= it.next();
+		while ((it.hasNext()) && (name.compareTo(p.getName()) != 0)) {
 			p= it.next();
-			while ((it.hasNext()) && (name.compareTo(p.getName()) != 0)) {
-				p= it.next();
-			}
-		} catch (NoSuchElementException e) {
-			
 		}
+		
 		return p;
 	}
 	
-	public Player getPlayerByIP(InetAddress ip){
+	public Player getPlayerByIP(InetAddress ip) throws NoSuchElementException, ArrayIndexOutOfBoundsException{
 		Iterator<Player> it = player.iterator();
 		Player p = null;
-		try {
-			p = it.next();
-			while ((it.hasNext()) && (ip.getHostAddress().compareTo(p.getIP().getHostAddress()) != 0)) {
-				p= it.next();
-			}
-		} catch (NoSuchElementException e) {
-			
+		p = it.next();
+		while ((it.hasNext()) && (ip.getHostAddress().compareTo(p.getIP().getHostAddress()) != 0)) {
+			p= it.next();
 		}
+		
 		return p;
 	}
 	
@@ -51,8 +45,8 @@ public class Players {
 		player.add(new Player(name,ip));
 	}
 
-	public void remove(InetAddress ip) {
-		player.remove(getPlayerByIP(ip));	
+	public void remove(String name) {
+		player.remove(getPlayerByName(name));	
 	}
 
 	public String list() {
@@ -73,5 +67,14 @@ public class Players {
 
 	public int getId(Player p) {
 		return player.indexOf(p);
+	}
+
+	public boolean isAvailableName(String name) {
+		for (Player p : player){
+			if (name.compareTo(p.getName())==0){
+				return false;
+			}
+		}
+		return true;
 	}
 }
