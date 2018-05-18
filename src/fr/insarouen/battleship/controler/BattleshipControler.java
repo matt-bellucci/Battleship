@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import fr.insarouen.battleship.model.DataServer;
 import fr.insarouen.battleship.observer.Observer;
 import fr.insarouen.battleship.model.Game;
+import fr.insarouen.battleship.model.PlayerInGame;
 
 public class BattleshipControler extends AbstractControler {
 
@@ -97,9 +98,10 @@ public class BattleshipControler extends AbstractControler {
 	}
         
         @Override
-        public void discover(int x, int y, String name){
+        public void discover(int x, int y){
             Game game = data.getGame(idGame);
-            game.discover(x,y,game.getPlayerByName(name));
+            PlayerInGame opp= game.opponentTo(game.getPlayerByName(name));
+            game.discover(x,y,opp);
         }
 
 

@@ -50,7 +50,11 @@ public class Game implements Observable{
         public void discover(int x, int y, PlayerInGame player){
             String resultat = player.discover(x,y);
             notifyObserver("TIR:"+x+":"+y+":"+player.getName()+":"+resultat);
-            
+            if (player.hasLost()){notifyObserver("FINPARTIE:"+player.getName());}
         }
 	
+        public PlayerInGame opponentTo(PlayerInGame player){
+            if ( player.equals(player1) ){return player2;}
+            else{return player1;}
+        }
 }
