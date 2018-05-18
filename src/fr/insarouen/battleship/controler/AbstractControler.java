@@ -35,5 +35,7 @@ public abstract class AbstractControler {
 	public abstract void newGame(String string);
 
 	public abstract void setIdGame(int id);
+        
+        public abstract void discover(int x, int y, String name);
 	
 }

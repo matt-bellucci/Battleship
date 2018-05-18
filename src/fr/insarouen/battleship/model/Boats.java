@@ -1,32 +1,52 @@
 package fr.insarouen.battleship.model;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Boats {
 	
-	private ArrayList<Boat> boat;
-	
+	private HashMap<Integer, Boat> mapBoats;
+	private Integer nextKey;
 	public Boats(){
-		this.boat = new ArrayList<Boat>();
+		this.mapBoats = new HashMap<>();
 	}
 	
-	public Boats(Boat ... boats){
+	public Boats(int firstKey, Boat ... boats){
+            int key=firstKey;
+            this.mapBoats = new HashMap<>();
 		for( Boat b : boats){
-		    boat.add(b);
+		    mapBoats.put(key, b);
+                    b.setId(key);
+                    key++;
+                 
 		}
+            this.nextKey = key;
 		
 	}
-	
-	public Boat get(int id){
-		return boat.get(id);
+	public void addBoat(Boat boat){
+            this.mapBoats.put(nextKey, boat);
+            this.nextKey++;
+        }
+        
+        public void removeBoat(int id){
+            this.mapBoats.remove(id);
+        }
+        
+	public Boat getBoat(int id){
+		return mapBoats.get(id);
 	}
 	
 	public boolean allSunk(){
 		boolean allsunk = true ;
-		int i =0;
-		while (boat.get(i).isSunk())
-			i++;  
-		return (i == boat.size());	
+                Integer key;
+		Set<Integer> keys = mapBoats.keySet();
+                Iterator<Integer> keyIt = keys.iterator();
+		while (keyIt.hasNext() && allsunk){
+                    key = keyIt.next();
+                    allsunk = mapBoats.get(key).isSunk();
+                }
+		return allsunk;	
 	}
 
 }
