@@ -1,8 +1,19 @@
 package fr.insarouen.battleship.model;
 
 public class Boat {
+
+	private int id;
 	private int length;
 	private int nbTouched =0;
+	
+	
+	public setId(int id){
+		this.id = id;
+		}
+	
+	public getId(){
+		return this.id;
+		}
 	
 	public Boat(){
 		this.length = 3;
