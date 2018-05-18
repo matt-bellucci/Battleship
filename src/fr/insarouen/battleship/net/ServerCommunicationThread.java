@@ -172,6 +172,10 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 		    controler.remove(this);
 		    closeConnexion = true;
 		    break;
+        case "DECOUVRIR":
+        	controler.discover(commande.get(1), commande.get(2));
+       		break;
+                    
 		default : 
 		    toSend = "Commande inconnu !";                     
 		    break;
