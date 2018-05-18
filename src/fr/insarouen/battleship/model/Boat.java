@@ -6,22 +6,22 @@ public class Boat {
 	private int length;
 	private int nbTouched =0;
 	
-	
-	public int setId(int id){
-		this.id = id;
-	}
-	
-	public void getId(){
-		return this.id;
-	}
-	
-	public Boat(){
+	public void Boat(){
 		this.length = 3;
 	}
 	
-	public Boat(int length){
+	public void Boat(int length){
 		this.length = length;
 	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+	
 	
 	public void touched(){
 		this.nbTouched++;
