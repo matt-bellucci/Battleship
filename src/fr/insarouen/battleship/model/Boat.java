@@ -7,13 +7,13 @@ public class Boat {
 	private int nbTouched =0;
 	
 	
-	public setId(int id){
+	public int setId(int id){
 		this.id = id;
-		}
+	}
 	
-	public getId(){
+	public void getId(){
 		return this.id;
-		}
+	}
 	
 	public Boat(){
 		this.length = 3;
