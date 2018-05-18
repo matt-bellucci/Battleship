@@ -28,4 +28,5 @@ public class Square {
 	public boolean isDiscovered() {
 		return discovered;
 	
+        }
 }

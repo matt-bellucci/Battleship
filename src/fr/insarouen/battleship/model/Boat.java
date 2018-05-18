@@ -20,11 +20,11 @@ public class Boat {
 		return this.orientation;
 	} */
 	
-	public void Boat(){
+	public Boat(){
 		this.length = 3;
 	}
 	
-	public void Boat(int length){
+	public Boat(int length){
 		this.length = length;
 	}
 	

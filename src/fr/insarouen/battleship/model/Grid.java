@@ -1,4 +1,5 @@
 package fr.insarouen.battleship.model;
+import fr.insarouen.battleship.model.Square;
 
 public class Grid {
 
@@ -18,15 +19,15 @@ public class Grid {
 		
 		
 	public boolean isDiscovered(int x, int y) {
-		return grid[x][y].Square.isDiscovered();	
+		return grid[x][y].isDiscovered();	
 		}
 		
 	public void discover(int x, int y) {
-		this.grid[x][y].Square.discover();
+		this.grid[x][y].discover();
 		}
 		
 	public int getId(int x, int y) {
-		return  grid[x][y].Square.getId();
+		return  grid[x][y].getId();
 		}
 		
 }
