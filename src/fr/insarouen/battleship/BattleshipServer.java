@@ -12,7 +12,7 @@ public class BattleshipServer {
 
     public static void main(String[] args){
     	
-    	 String host = "127.0.0.1";
+    	 String host = "192.168.1.25";
     	 int port = 1099;
     	 
     	 // Récupération-Initialisation des données- Instanciation du Modèle 

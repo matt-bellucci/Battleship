@@ -20,28 +20,12 @@ public class BattleshipClient {
 	 * @throws UnknownHostException 
 	 */
 	public static void main(String[] args) {
-			String host = "127.0.0.1";
+			String host = "192.168.1.25";
 			int port = 1099;
 
-			// Création d'une connexion socket
 			try {
-				System.out.println("Initialisation Thread de Communication");
-				ClientCommunicationThread com = new ClientCommunicationThread(host, port);
-				System.out.println("Lancement Thread de Communication");
-				com.start();
-				
-				// Lancement de l'IHM du jeu
 				System.out.println("Lancement de l'IHM");
-				IHM ihm = new IHM(com); 
-				
-				com.setIHM(ihm);
-				
-			} catch (ConnectException e) {
-				System.err.println("Serveur indisponible : veuillez réessayer plus tard");
-		    } catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+				IHM ihm = new IHM(host, port); 
 			} catch (IndexOutOfBoundsException e){
 				e.printStackTrace();
 			}

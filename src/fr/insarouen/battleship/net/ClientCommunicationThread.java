@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 
 import fr.insarouen.battleship.view.IHM;
+import fr.insarouen.battleship.view.StateIHM;
 
 /**
  * Gestion de la communication socket cote client
@@ -34,8 +35,9 @@ public class ClientCommunicationThread extends CommunicationThread {
 		super(socket);
 	}
 	
-	public ClientCommunicationThread(String pHost, int pPort) throws UnknownHostException, IOException {
+	public ClientCommunicationThread(IHM ihm, String pHost, int pPort) throws UnknownHostException, IOException {
 		super(pHost,pPort);
+		this.ihm = ihm;
 		try {
 			writer = new PrintWriter(socket.getOutputStream(), true);
 			reader = new BufferedInputStream(socket.getInputStream());
@@ -161,51 +163,50 @@ public class ClientCommunicationThread extends CommunicationThread {
 	}
 
 	@Override
-	public void process(ArrayList<String> commande) {
-		switch(commande.get(0).toUpperCase()){
-		
-		case "LIST":
-			try {
-				ihm.updateListPlayers(commande.get(1));
-			} catch (NullPointerException e) {
-				System.out.println("Erreur de listing");
-			}
-			break;	
-		
-		case "DEMANDEPARTIE":
-			ihm.askNewGame(commande.get(1));
-			break;
-		
-		case "REPONSEPARTIE":
-			if (commande.get(2).compareTo("oui") == 0 ){
-				ihm.battleInterface(commande.get(1));
-			}
-			else {
-				ihm.requestRefused(commande.get(1));
-			}
-			break;
-
-		case "IDPARTIE":
-				send("IDPARTIE:"+commande.get(1));
+	public void process(ArrayList<String> commande) {	
+			switch(commande.get(0).toUpperCase()){
+			case "LIST":
+				try {
+					ihm.updateListPlayers(commande.get(1));
+				} catch (NullPointerException e) {
+					System.out.println("Erreur de listing");
+				}
+				break;	
+			
+			case "DEMANDEPARTIE":
+				ihm.askNewGame(commande.get(1));
+				break;
+			
+			case "REPONSEPARTIE":
+				if (commande.get(2).compareTo("oui") == 0 ){
+					ihm.battleInterface(commande.get(1));
+				}
+				else {
+					ihm.requestRefused(commande.get(1));
+				}
+				break;
+	
+			case "IDPARTIE":
+					send("IDPARTIE:"+commande.get(1));
+				break;
+				
+			case "REQUEST":
+					request = commande.get(1);
+					inRequest = false;
+				break;
+				
+			case "TIR":
+				ihm.updateGrid(commande.get(1),commande.get(2),commande.get(3),commande.get(4));
 			break;
 			
-		case "REQUEST":
-				request = commande.get(1);
-				inRequest = false;
-			break;
-		
-		case "CLOSE":
-		    closeConnexion = true;
-		    break;
-		
-		default : 
-			System.out.println("Traitement :" + commande.get(0));
-		    break;
+			case "CLOSE":
+			    closeConnexion = true;
+			    break;
+			
+			default : 
+				System.out.println("Traitement :" + commande.get(0));
+			    break;
+			}
 		}
-	}
-
-	public void setIHM(IHM ihm) {
-		this.ihm = ihm;
-	}
-
+	
 }
