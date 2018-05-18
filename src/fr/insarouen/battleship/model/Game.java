@@ -9,12 +9,12 @@ import fr.insarouen.battleship.observer.Observer;
 
 public class Game implements Observable{
 
-	private Player player1, player2;
+	private PlayerInGame player1, player2;
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
 	private static int idGame =0;
 	
-	public Game(Player p1, Observer o1, Player p2, Observer o2) {
+	public Game(PlayerInGame p1, Observer o1, PlayerInGame p2, Observer o2) {
 		idGame++;
 		this.player1 = p1;
 		this.listObserver.add(o1);
@@ -22,8 +22,9 @@ public class Game implements Observable{
 		this.listObserver.add(o2);
 	}
 	
-	public Player getPlayer(){
-		return player1;
+	public PlayerInGame getPlayerByName(String name){
+            if ( name.equals(player1.getName()) ){return player1;}
+            else{return player2;}
 	}
 
 	public int getIdGame() {
@@ -45,5 +46,11 @@ public class Game implements Observable{
 			obs.update(str);
 		}
 	}
+        
+        public void discover(int x, int y, PlayerInGame player){
+            String resultat = player.discover(x,y);
+            notifyObserver("TIR:"+x+":"+y+":"+player.getName()+":"+resultat);
+            
+        }
 	
 }

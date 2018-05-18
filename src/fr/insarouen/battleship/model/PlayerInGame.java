@@ -3,11 +3,13 @@ package fr.insarouen.battleship.model;
 public class PlayerInGame extends Player {
     
     private Grid playerGrid;
+    private Boats playerBoats;
     
     
     public PlayerInGame(){
         super();
-        this.playerGrid = new Grid();          
+        this.playerGrid = new Grid();
+        this.playerBoats = new Boats();
         
     }
     
@@ -16,14 +18,32 @@ public class PlayerInGame extends Player {
         this.playerGrid = new Grid();
     }
     
+    public PlayerInGame(Player player, Boats boats){
+        super(player.getName(), player.getIP());
+        this.playerGrid = new Grid();
+        this.playerBoats = boats;
+    }
+    
     public PlayerInGame(Player player, Grid grid){
         super(player.getName(), player.getIP());
         this.playerGrid = grid;
     }
     
     
-    /*public Case getCase(Point2D point){
-        playerGrid.getCase(point).getId();
-    }*/
+    public String discover(int x, int y){
+        playerGrid.discover(x, y);
+        int id = playerGrid.getId(x, y);
+        if (id<0){return "PLOUF";}
+        else{
+            Boat boat = playerBoats.getBoat(id);
+            boat.touched();
+            if (boat.isSunk()){return "COULE";}
+            else{return "TOUCHE";}
+        }
+    }
+    
+    public boolean hasLost(){
+        return playerBoats.allSunk();
+    }
     
 }
