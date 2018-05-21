@@ -28,14 +28,17 @@ public class DataServer implements Observable{
 	
 	public void newPlayer(InetAddress ip){
 		this.players.add(ip);
+		System.out.println("Nouveau Joueur"+ip);
 	}
 	
 	public void newPlayer(String name, InetAddress ip){
 		this.players.add(name,ip);
+		System.out.println("Nouveau Joueur"+name+"/"+ip);
 	}
 	
 	public void removePlayer(String name){
 		this.players.remove(name);
+		System.out.println("Suppression Joueur : "+name);
 	}
 	
 	public boolean isAvailableName(String name) {
@@ -45,9 +48,15 @@ public class DataServer implements Observable{
 	// METHODES RELATIVES AUX PARTIES
 	
 	public void newGame(String name1, String name2){
+		int i=0;
+		for (Observer o : listObserver){
+			System.out.println("Obs "+(i++) +" : "+o.toString()+"\n");
+				
+		}
+		System.out.println("---------------CREATION PARTIE --------------\n");
 		
 		Observer obs1 = getObserverByName(name1), obs2=getObserverByName(name2);
-		
+
 		Game g = new Game(	new PlayerInGame(players.getPlayerByName(name1)),
 							obs1, 
 							new PlayerInGame(players.getPlayerByName(name2)), 
@@ -56,12 +65,14 @@ public class DataServer implements Observable{
 		this.games.add(g);
 		
 		obs1.update("IDPARTIE:"+g.getIdGame());
-		removeObserver(getObserverByName(name1));
-		removePlayer(name1);
 
 		obs2.update("IDPARTIE:"+g.getIdGame());
-		removeObserver(getObserverByName(name2));
+
+		removeObserver(obs1);
+		removePlayer(name1);
+		removeObserver(obs2);
 		removePlayer(name2);
+		System.out.println(g.toString());
 	}
 
 	public Game getGame(int idGame) {
@@ -89,10 +100,11 @@ public class DataServer implements Observable{
 
 	@Override
 	public void notifyObserver(String str) {
+		System.out.println("Mise à jour observateur Data x"+this.listObserver.size());
+		System.out.println("-> Message : "+str);
 		for (Observer obs : listObserver){
 			obs.update(str);
 		}
-		
 	}
 	
 	

@@ -16,6 +16,7 @@ public class PlayerInGame extends Player {
     public PlayerInGame(Player player){
         super(player.getName(), player.getIP());
         this.playerGrid = new Grid();
+        this.playerBoats = new Boats(0,new Boat(4),new Boat(3));
     }
     
     public PlayerInGame(Player player, Boats boats){
@@ -31,6 +32,7 @@ public class PlayerInGame extends Player {
     
     
     public String discover(int x, int y){
+		System.out.println("Decouvrir in player: "+x+y);
         playerGrid.discover(x, y);
         int id = playerGrid.getId(x, y);
         if (id<0){return "PLOUF";}

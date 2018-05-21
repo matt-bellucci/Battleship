@@ -3,12 +3,11 @@ package fr.insarouen.battleship.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-public class OpposingGrid extends JPanel {
+public class PersonalGrid extends JPanel {
+
 
 	 public static final Color NOT_DICOVERED = new Color(200,200,200);
 	 public static final Color TOUCHED = new Color(200,20,20);
@@ -19,7 +18,7 @@ public class OpposingGrid extends JPanel {
 	 
 	 private int[][] square;
 	
-	public OpposingGrid() {
+	public PersonalGrid() {
 		super();
 		square = new int[10][10];
 		for (int j=0;j< nbColonne;j++){
@@ -30,7 +29,7 @@ public class OpposingGrid extends JPanel {
 		//this.addMouseListener(this);
 	}
 
-	public OpposingGrid(int nbLig,int nbCol) {
+	public PersonalGrid(int nbLig,int nbCol) {
 		super();
 		this.nbLigne=nbLig;
 		this.nbColonne=nbCol;
@@ -113,4 +112,5 @@ public class OpposingGrid extends JPanel {
 		this.square[x][y]= value;
 	}
 }
+
 

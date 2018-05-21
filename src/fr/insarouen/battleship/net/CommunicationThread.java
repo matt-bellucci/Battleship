@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
- * Gestion des connexions sockets
+ * Managing socket connections
  *
  * @author David ALBERT
  * @version 0
@@ -22,7 +22,7 @@ public abstract class CommunicationThread extends Thread {
     protected BufferedInputStream reader = null;
     
     /**
-     * 
+     * Constructs a new Thread of communication with the specific Socket connection
      * @param Socket
      * @throws IOException, UnknownHostException
      * 
@@ -36,7 +36,7 @@ public abstract class CommunicationThread extends Thread {
 	}
 	
 	/**
-     * 
+     * Constructs a new Thread of communication thanks to the IP address of the remote device and port communication.
      * @param Socket
      * @throws IOException, UnknownHostException
      * 
@@ -55,7 +55,7 @@ public abstract class CommunicationThread extends Thread {
 	 }
 	 
 	 /**
-	  * Gere la reception et le traitement des messages
+	  * Manage the receipt and processing of messages
 	  * 
 	  */
 	 @Override
@@ -77,25 +77,25 @@ public abstract class CommunicationThread extends Thread {
 	 }
 	 
 	 /**
-	  * Lit sur le canal de communication le message recu
+	  * Read on the channel the received message
 	  */
 	 public abstract String receive();
 	 
 	 /**
-	  * Ecrit sur le canal de communication le message a envoyer
+	  * Write on the channel the message to send
 	  *	@return String
 	  */
 	 public abstract void send(String str);
 	 
 	 /**
-	  * Modifie la chaine de caractere recu pour qu'elle puisse etre interpretee
+	  * Modify the received string to be interpreted
 	  * @param String
 	  * @return ArrayList<String>
 	  */
 	 protected abstract ArrayList<String> decode(String str);
 	 
 	 /**
-	  * Traite le message recu
+	  * Process the received message
 	  * @param ArrayList<String>
 	  */
 	 public abstract void process(ArrayList<String> commande);

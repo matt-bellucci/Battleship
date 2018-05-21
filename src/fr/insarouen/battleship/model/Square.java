@@ -5,11 +5,11 @@ public class Square {
 	private boolean discovered=false;
 	private int id; 
 	
-	public void Square() {
+	public Square() {
 		this.id = -1;
 		}
 	
-	public void Square(int id){
+	public Square(int id){
 		this.id = id; 
 	}	
 

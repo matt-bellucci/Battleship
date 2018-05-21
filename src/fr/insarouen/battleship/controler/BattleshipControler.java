@@ -14,6 +14,9 @@ public class BattleshipControler extends AbstractControler {
 	private String name = "Inconnu";
 	private int idGame = -1;
 	
+	/**
+	 * Constructs a controller for BattleshipNet with data and IP player
+	 */
 	public BattleshipControler(DataServer data, InetAddress ip) {
 		super(data);
 		this.ip = ip;
@@ -23,6 +26,7 @@ public class BattleshipControler extends AbstractControler {
 	public void newPlayer() {
 		data.newPlayer(ip);
 		data.notifyObserver("LIST:"+data.getPlayersList());
+		
 	}
 	
 	@Override
@@ -54,8 +58,8 @@ public class BattleshipControler extends AbstractControler {
 	}
 	
 	@Override
-	public void askNewGame(String name) {
-		Observer obs = data.getObserverByName(name);
+	public void askNewGame(String p) {
+		Observer obs = data.getObserverByName(p);
 		obs.update("DEMANDEPARTIE:"+this.name);
 	}
 
@@ -89,6 +93,7 @@ public class BattleshipControler extends AbstractControler {
 		} catch (ArrayIndexOutOfBoundsException e){
 			System.out.println("Element inconnu dans la liste");
 		}
+
 	}
 
 	@Override
@@ -97,12 +102,17 @@ public class BattleshipControler extends AbstractControler {
 		
 	}
         
-        @Override
-        public void discover(int x, int y){
-            Game game = data.getGame(idGame);
-            PlayerInGame opp= game.opponentTo(game.getPlayerByName(name));
-            game.discover(x,y,opp);
-        }
+	@Override
+	public void discover(int x, int y){
+		Game game = data.getGame(idGame);
+		PlayerInGame opp= game.opponentTo(game.getPlayerByName(name));
+		game.discover(x,y,opp);
+	}
+	
+	@Override
+	public String toString(){
+		return "Controller coté server de "+ this.name +" "+this.ip;
+	}
 
 
 }

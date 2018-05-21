@@ -8,7 +8,7 @@ import fr.insarouen.battleship.controler.*;
 import fr.insarouen.battleship.observer.Observer;
 
 /**
- * Gesion de la communication socket cote serveur avec un client connecte
+ * Management of socket connections (server side).
  *
  * @author David ALBERT
  * @version 0
@@ -21,6 +21,12 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
     private AbstractControler controler;
     private boolean closeConnexion = true;
 
+    /**
+     * Constructs a new Thread of server communication with the client thanks the specific Socket connection and the adequate client controller
+     * @param Socket, {@link AbstractControler}
+     * @throws IOException, UnknownHostException
+     * 
+     */
     public ServerCommunicationThread(Socket socket, AbstractControler controler) throws IOException {
 		super(socket);
     	this.controler = controler;		
@@ -29,7 +35,9 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
     @Override
     public void run() {
 			 
-		System.err.println("Lancement du traitement de la connexion cliente");
+		System.err.println("Lancement du traitement de la communication serveur");
+		InetSocketAddress remote = (InetSocketAddress)socket.getRemoteSocketAddress();
+		
 		closeConnexion = false;
 			
 		//tant que la connexion est active, on traite les demandes
@@ -37,8 +45,7 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 		    try {
 				
 				String message = receive();
-				InetSocketAddress remote = (InetSocketAddress)socket.getRemoteSocketAddress();
-		
+				
 				// Transformation de la chaîne de caractère reçue pour facilité le traitement
 				ArrayList<String> commande = new ArrayList<String>();
 				commande = decode(message);
@@ -46,9 +53,9 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 				//On affiche quelques infos
 				String debug = "";
 				debug = "Thread : " + Thread.currentThread().getName() + ". ";
-				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".";
-				debug += " Sur le port : " + remote.getPort() + ".\n";
-				debug += "\t -> Commande reçue : " + message + "\n";
+				debug += "Demande de l'adresse : " + remote.getAddress().getHostAddress() +".\n";
+				//debug += " Sur le port : " + remote.getPort() + ".\n";
+				debug += "-> Commande reçue : " + message + "\n";
 				System.err.println("\n" + debug);
 				
 				//On traite la demande du client en fonction de la commande envoyée
@@ -56,7 +63,7 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 			
 				//On ferme la connexion
 				if(closeConnexion){
-				    System.err.println("COMMANDE CLOSE DETECTEE ! ");
+				    System.err.println("Fermeture connexion avec :"+remote.getAddress().getHostAddress() +".");
 				    writer = null;
 				    reader = null;
 				    socket.close();
@@ -65,7 +72,7 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 			
 			// Gestion des erreurs
 		    } catch (SocketException e) {
-		    	System.err.println("LA CONNEXION A ETE INTERROMPUE");
+		    	System.err.println("Connexion interrompue");
 		    } catch (IOException e) {
 		    	e.printStackTrace();
 		    }
@@ -154,16 +161,19 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 				controler.setIdGame(Integer.parseInt(commande.get(1)));
 			break;
 			
-		case "REQUEST":
-			switch(commande.get(1).toUpperCase()){
-			case "AVAILABLENAME":
-				if (controler.isAvailableName(commande.get(2))){
-					toSend = "REQUEST:yes";
+		case "AVAILABLENAME":
+			if (controler.isAvailableName(commande.get(1))){
+				toSend = "AVAILABLENAME:"+commande.get(1)+":yes";
+				controler.newPlayer(commande.get(1));
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				else {
-					toSend = "REQUEST:no";
-				}
-				break;
+				
+			}
+			else {
+				toSend = "AVAILABLENAME:"+commande.get(1)+":no";
 			}
 			break;
 			
@@ -173,7 +183,7 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 		    closeConnexion = true;
 		    break;
         case "DECOUVRIR":
-        	controler.discover(commande.get(1), commande.get(2));
+        	controler.discover(Integer.parseInt(commande.get(1)), Integer.parseInt(commande.get(2)));
        		break;
                     
 		default : 
@@ -188,8 +198,11 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 
 	@Override
 	public void update(String str) {
-		System.out.println("Mise à jour : "+ str);
 		send(str);
 	}
 
+	@Override
+	public String toString(){
+		return "Thread de communication coté server associé à : \n" + controler.toString(); 
+	}
 }

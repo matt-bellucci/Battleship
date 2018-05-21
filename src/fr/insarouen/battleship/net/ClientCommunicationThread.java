@@ -14,7 +14,7 @@ import fr.insarouen.battleship.view.IHM;
 import fr.insarouen.battleship.view.StateIHM;
 
 /**
- * Gestion de la communication socket cote client
+ * Management of socket connexions (client side)
  *
  * @author David ALBERT
  * @version 0
@@ -30,7 +30,12 @@ public class ClientCommunicationThread extends CommunicationThread {
 	private boolean inRequest = false;
 	private String request ="";
 	
-	
+	 /**
+     * Constructs a new Thread of communication with the server thanks to the specific Socket connexion
+     * @param Socket
+     * @throws IOException, UnknownHostException
+     * 
+     */
 	public ClientCommunicationThread(Socket socket) throws IOException {
 		super(socket);
 	}
@@ -51,7 +56,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 
 	@Override
 	public void run() {
-		System.err.println("Lancement du traitement de la communication serveur");
+		System.err.println("Lancement du traitement de la communication cliente");
 		closeConnexion = false;
 			
 		//tant que la connexion est active, on traite les demandes
@@ -67,9 +72,9 @@ public class ClientCommunicationThread extends CommunicationThread {
 					
 					//On affiche quelques infos
 					String debug = "";
-					debug += "Message du server : " + remote.getAddress().getHostAddress() +".";
-					debug += " Sur le port : " + remote.getPort() + ".\n";
-					debug += "\t -> Commande reçue : " + message + "\n";
+					debug += "Message du server : " + remote.getAddress().getHostAddress() +".\n";
+					//debug += " Sur le port : " + remote.getPort() + ".\n";
+					debug += " -> Commande reçue : " + message + "\n";
 					System.err.println("\n" + debug);
 				
 					//On traite la demande du client en fonction de la commande envoyée
@@ -77,7 +82,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 		    	
 				//On ferme la connexion
 				if(closeConnexion){
-				    System.err.println("COMMANDE CLOSE DETECTEE ! ");
+				    System.err.println("Fermeture connexion avec :"+remote.getAddress().getHostAddress() +".");
 				    writer = null;
 				    reader = null;
 				    socket.close();
@@ -86,7 +91,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 			
 			// Gestion des erreurs
 		    } catch (SocketException e) {
-		    	System.err.println("LA CONNEXION A ETE INTERROMPUE");
+		    	System.err.println("Connexion interrompue");
 		    } catch (IOException e) {
 		    	e.printStackTrace();
 		    }
@@ -182,7 +187,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 					ihm.battleInterface(commande.get(1));
 				}
 				else {
-					ihm.requestRefused(commande.get(1));
+					ihm.requestRefused(commande.get(1), StateIHM.OPPONENT_CHOICE);
 				}
 				break;
 	
@@ -190,9 +195,16 @@ public class ClientCommunicationThread extends CommunicationThread {
 					send("IDPARTIE:"+commande.get(1));
 				break;
 				
-			case "REQUEST":
-					request = commande.get(1);
-					inRequest = false;
+			case "AVAILABLENAME":
+				if (commande.get(2).compareTo("yes") == 0 ){
+					ihm.setPlayerName(commande.get(1));
+					ihm.opponentChoiceInterface();
+					send("LIST");
+				}
+				else {
+					ihm.requestRefused(commande.get(1), StateIHM.PLAYER_IDENTIFICATION);
+				}
+				
 				break;
 				
 			case "TIR":

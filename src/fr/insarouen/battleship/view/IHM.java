@@ -28,9 +28,12 @@ public class IHM extends JFrame {
     
     // Conteneurs de l'interface graphique
     private JPanel container = new JPanel();
+    
     private Menu menu;
     private ListPlayers listing;
+    
     private OpposingGrid opposingGrid = new OpposingGrid();
+    private OpposingGrid personalGrid = new OpposingGrid(); 
     
     // Lien de communication avec le serveur
     private boolean connected = false;
@@ -38,8 +41,12 @@ public class IHM extends JFrame {
 	
 	// Etat de l'application
 	private StateIHM current_state = StateIHM.PLAYER_IDENTIFICATION;
-	private boolean turn = true;
+	private boolean turn = false;
     
+	// Elements partie
+	JLabel message =new JLabel("MESSAGE");
+	
+	String pName = "";
 	
     public IHM(String host, int port){
 
@@ -103,8 +110,19 @@ public class IHM extends JFrame {
 		listing.setPlayersName(players);
 	}
 	
-	public void requestRefused(String name){
-		this.listing.setButtonText("Demande de "+name+"refusée.");
+	public void requestRefused(String name,StateIHM state){
+		switch (state){
+		case OPPONENT_CHOICE : 
+			this.listing.setButtonText("Demande de "+name+" refusée.");
+			break;
+		case PLAYER_IDENTIFICATION : 
+			this.setBackground(new Color(50,0,0));
+			this.setTitle(name + " déjà utilisé");
+			
+			break;
+		
+		}
+		
 	}
 	
 	public void setStateIHM(StateIHM state){
@@ -122,6 +140,7 @@ public class IHM extends JFrame {
 			System.out.println("Réponse oui");
 			com.send("REPONSEPARTIE:"+str+":oui");
 			battleInterface(str);
+			this.turn = true;
 		}
 		else {
 			com.send("REPONSEPARTIE:"+str+":non");
@@ -145,13 +164,7 @@ public class IHM extends JFrame {
     	submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				if (com.request("AvailableName:"+pseudoField.getText()).compareTo("yes") == 0){
-					//setStateIHM(StateIHM.OPPONENT_CHOICE);
-					opponentChoiceInterface();
-					com.send("NEW:"+pseudoField.getText());
-					com.send("LIST");
-				}
+				com.send("AvailableName:"+pseudoField.getText());
 			}
 		});
     	container.add(submit);
@@ -162,7 +175,7 @@ public class IHM extends JFrame {
     	this.setVisible(true);
 	}
 	
-	private void opponentChoiceInterface(){
+	public void opponentChoiceInterface(){
 		// On efface tous les composants du conteneur principal
 		container.removeAll();
 		
@@ -193,11 +206,11 @@ public class IHM extends JFrame {
 	
 	public void battleInterface(String str){
 		container.removeAll();
+		GridLayout layout = new GridLayout(0,2);
     	this.setTitle("Bataille contre "+str);
     	this.setSize(1000,600);
     	this.setBackground(BACKGROUND_COLOR);
     	this.setJMenuBar(menu);
-    	
     	opposingGrid.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -211,15 +224,19 @@ public class IHM extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX()/((int) opposingGrid.getWidth()/opposingGrid.getNbCol());
-				int y = e.getY()/((int) opposingGrid.getHeight()/(opposingGrid.getNbLig()+1));
+				int y = e.getY()/((int) opposingGrid.getHeight()/opposingGrid.getNbLig());
 				if ((turn) && opposingGrid.getValueOfSquare(x,y) == 0){
 					com.send("DECOUVRIR:"+x+":"+y);
-					turn = false;
 				}
 			}
 		});
+    	container.setLayout(layout);
     	container.add(opposingGrid);
-    	
+    	container.add(new JLabel());
+
+    	container.add(message);
+    	container.add(personalGrid);
+
     	
     	this.setContentPane(container);
     	//Afficher la fenêtre
@@ -227,10 +244,31 @@ public class IHM extends JFrame {
 	}
 
 
-	public void updateGrid(String x, String y, String name,
-			String state) {
-		if (state.compareTo("PLOUF")==0)
-			opposingGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),-1);
+	public void updateGrid(String x, String y, String name,String state) {
+		if (name.compareTo(this.pName) == 0){
+			if (state.compareTo("PLOUF")==0){
+				personalGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),-1);
+			}
+			else {
+				personalGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),1);
+			}
+		}
+		else {
+			if (state.compareTo("PLOUF")==0){
+				opposingGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),-1);
+			}
+			else {
+				opposingGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),1);
+			}
+		}
+		
+		message.setText(state);
+		turn = !turn;
+	}
+
+
+	public void setPlayerName(String string) {
+		this.pName = string;
 	}
 }	
 	

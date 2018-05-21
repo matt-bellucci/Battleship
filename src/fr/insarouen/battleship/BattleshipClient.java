@@ -20,7 +20,7 @@ public class BattleshipClient {
 	 * @throws UnknownHostException 
 	 */
 	public static void main(String[] args) {
-			String host = "192.168.1.25";
+			String host = "192.168.1.22";
 			int port = 1099;
 
 			try {

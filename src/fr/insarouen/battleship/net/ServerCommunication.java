@@ -3,11 +3,12 @@ package fr.insarouen.battleship.net;
 import java.net.*;
 import java.io.*;
 
+import fr.insarouen.battleship.controler.AbstractControler;
 import fr.insarouen.battleship.controler.BattleshipControler;
 import fr.insarouen.battleship.model.DataServer;
 
 /**
- * Thread de communication serveur, recoit les connexions clientes et les traitent
+ * Communication thread (server side) to receive client connections and process each of them separately
  *
  * @author David ALBERT
  * @version 0
@@ -26,6 +27,9 @@ public class ServerCommunication {
    private ServerSocket server = null;
    private boolean isRunning = true;
    
+   /**
+    * Constructs a Server communication on port 1099 and localhost IP
+    */
    public ServerCommunication(){
       try {
          server = new ServerSocket(port, MAX_CONNEXIONS, InetAddress.getByName(host));
@@ -36,6 +40,9 @@ public class ServerCommunication {
       }
    }
    
+   /**
+    * Constructs a Server communication with a given host port, given host IP and the data that the server have to use
+    */
    public ServerCommunication(String pHost, int pPort, DataServer data){
       host = pHost;
       port = pPort;
@@ -50,7 +57,9 @@ public class ServerCommunication {
    }
    
    
-   //On lance le serveur
+   /**
+    * Open a Server which wait client connection to create a specific thread to communicate with him
+    */
    public void open(){
       
       //Toujours dans un thread à part vu qu'il est dans une boucle infinie
@@ -90,6 +99,9 @@ public class ServerCommunication {
       t.start();
    }
    
+   /**
+    * Close the Server
+    */
    public void close(){
       isRunning = false;
    }   
