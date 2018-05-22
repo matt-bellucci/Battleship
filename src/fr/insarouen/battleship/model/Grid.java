@@ -58,5 +58,9 @@ public class Grid {
 			}
 		}
 	}
+	
+	public String toString() {
+		return "Taille de la grille : "+getSize()"\n";
+	}
 		
 }

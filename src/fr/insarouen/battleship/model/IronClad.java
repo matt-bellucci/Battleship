@@ -10,4 +10,10 @@ public class IronClad extends Boat {
 	public boolean isSunk(){
 		return (this.getLength()*2 == this.getNbTouched());
 	}
+	
+	@Override
+	public String toString() {
+		return "Cuirassé : deux fois plus puissant\n";
+	}
+	
 }

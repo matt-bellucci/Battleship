@@ -7,7 +7,9 @@ public class Player {
 	
 	private String name;
 	private InetAddress ip;
-
+	
+	private stats = new Stats(); 
+	
 	public Player(){
 		byte[] ip = {127,0,0,1};
 		try {
@@ -17,6 +19,7 @@ public class Player {
 		}
 		this.name = new String("Anonyme");
 	}
+	
 	
 
 	public Player(InetAddress ip){
