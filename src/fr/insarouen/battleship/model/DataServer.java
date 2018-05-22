@@ -73,6 +73,12 @@ public class DataServer implements Observable{
 		removeObserver(obs2);
 		removePlayer(name2);
 		System.out.println(g.toString());
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		g.init();
 	}
 
 	public Game getGame(int idGame) {

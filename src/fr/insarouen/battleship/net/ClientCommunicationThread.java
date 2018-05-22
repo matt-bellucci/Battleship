@@ -225,4 +225,9 @@ public class ClientCommunicationThread extends CommunicationThread {
 			}
 		}
 	
+	@Override
+	public String toString(){
+		return "Thread de communication coté client"; 
+	}
+	
 }

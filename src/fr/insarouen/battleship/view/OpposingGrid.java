@@ -112,5 +112,10 @@ public class OpposingGrid extends JPanel {
 	public void setValueOfSquare(int x,int y, int value){
 		this.square[x][y]= value;
 	}
+	
+	@Override
+	public String toString(){
+		return "Grille Adverse";
+	}
 }
 

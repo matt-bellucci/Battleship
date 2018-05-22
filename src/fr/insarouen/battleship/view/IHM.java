@@ -117,7 +117,7 @@ public class IHM extends JFrame {
 			break;
 		case PLAYER_IDENTIFICATION : 
 			this.setBackground(new Color(50,0,0));
-			this.setTitle(name + " déjà utilisé");
+			this.setTitle(name + "Nom déjà utilisé");
 			
 			break;
 		
@@ -274,7 +274,13 @@ public class IHM extends JFrame {
 
 
 	public void setPersonalGrid(String string) {
+		System.out.println("Mise a jour de la grille perso");
 		this.personalGrid.setGrid(string);
+	}
+	
+	@Override
+	public String toString(){
+		return "Interface Homme Machine du jeu BattleShipNET";
 	}
 }	
 	

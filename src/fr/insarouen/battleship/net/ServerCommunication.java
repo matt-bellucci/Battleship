@@ -104,5 +104,10 @@ public class ServerCommunication {
     */
    public void close(){
       isRunning = false;
-   }   
+   } 
+   
+   @Override
+	public String toString(){
+		return "Serveur du jeu BattleShipNET"; 
+	}
 }

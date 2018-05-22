@@ -21,15 +21,20 @@ public class Game implements Observable{
 		this.idGame = numberOfGame;
 		this.player1 = p1;
 		addObserver(o1);
-		System.out.println(o1.toString());
+		//System.out.println(o1.toString());
 		this.player2 = p2;
 		addObserver(o2);
-		System.out.println(o2.toString());
+		//System.out.println(o2.toString());
 		
+		
+	}
+	
+	public void init(){
 		player1.placeBoatsRandomly();
-		//notifyObserver("GRID:"+player1.getName()+":"+player1.getInitialGrid());
+		notifyObserver("GRID:"+player1.getName()+":"+player1.getInitialGrid());
 		player2.placeBoatsRandomly();
-		//notifyObserver("GRID:"+player2.getName()+":"+player2.getInitialGrid());
+		notifyObserver("GRID:"+player2.getName()+":"+player1.getInitialGrid());
+		
 	}
 	
 	public PlayerInGame getPlayerByName(String name){

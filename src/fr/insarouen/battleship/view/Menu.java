@@ -42,6 +42,8 @@ public class Menu extends JMenuBar {
 	    this.add(aide); 
 	}
 	
-
+	public String toString(){
+		return "Menu du jeu BattleShipNET";
+	}
 
 }

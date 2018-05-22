@@ -120,6 +120,11 @@ public class PersonalGrid extends JPanel {
 			}
 		}
 	}
+	
+	@Override
+	public String toString(){
+		return "Grille Personnelle";
+	}
 }
 
 
