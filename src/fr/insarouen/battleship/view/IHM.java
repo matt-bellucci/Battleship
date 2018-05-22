@@ -33,7 +33,7 @@ public class IHM extends JFrame {
     private ListPlayers listing;
     
     private OpposingGrid opposingGrid = new OpposingGrid();
-    private OpposingGrid personalGrid = new OpposingGrid(); 
+    private PersonalGrid personalGrid = new PersonalGrid(); 
     
     // Lien de communication avec le serveur
     private boolean connected = false;
@@ -180,7 +180,7 @@ public class IHM extends JFrame {
 		container.removeAll();
 		
 		// Ajout Menu
-		this.menu =  new Menu();
+		this.menu =  new Menu(StateIHM.OPPONENT_CHOICE);
 		
 		// Ajout listing des joueurs
     	this.listing = new ListPlayers(com, "IA\n");
@@ -210,6 +210,7 @@ public class IHM extends JFrame {
     	this.setTitle("Bataille contre "+str);
     	this.setSize(1000,600);
     	this.setBackground(BACKGROUND_COLOR);
+		this.menu =  new Menu(StateIHM.IN_GAME);
     	this.setJMenuBar(menu);
     	opposingGrid.addMouseListener(new MouseListener() {
 			
@@ -269,6 +270,11 @@ public class IHM extends JFrame {
 
 	public void setPlayerName(String string) {
 		this.pName = string;
+	}
+
+
+	public void setPersonalGrid(String string) {
+		this.personalGrid.setGrid(string);
 	}
 }	
 	

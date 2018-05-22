@@ -8,33 +8,37 @@ public class Boats {
 	
 	private HashMap<Integer, Boat> mapBoats;
 	private Integer nextKey;
+	
 	public Boats(){
 		this.mapBoats = new HashMap<>();
 	}
 	
 	public Boats(int firstKey, Boat ... boats){
-            int key=firstKey;
-            this.mapBoats = new HashMap<>();
+		int key=firstKey;
+		this.mapBoats = new HashMap<>();
 		for( Boat b : boats){
-		    mapBoats.put(key, b);
-                    b.setId(key);
-                    key++;
-                 
+			mapBoats.put(key, b);
+			b.setId(key);
+			key++;
 		}
-            this.nextKey = key;
-		
+		this.nextKey = key;
 	}
+	
 	public void addBoat(Boat boat){
             this.mapBoats.put(nextKey, boat);
             this.nextKey++;
         }
         
-        public void removeBoat(int id){
-            this.mapBoats.remove(id);
-        }
+	public void removeBoat(int id){
+		this.mapBoats.remove(id);
+	}
         
 	public Boat getBoat(int id){
 		return mapBoats.get(id);
+	}
+	
+	public int getNbBoats(){
+		return mapBoats.size();
 	}
 	
 	public boolean allSunk(){

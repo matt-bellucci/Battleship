@@ -15,6 +15,7 @@ private ArrayList<Game> game;
 
 	public void add(Game game){
 		this.game.add(game);
+		System.out.println(this.toString());
 	}
 
 	public Game get(int idGame) {
@@ -26,5 +27,12 @@ private ArrayList<Game> game;
 		return null;
 	}
 	
+	public String toString(){
+		String str="Games : \n";
+		for (Game g : game){
+			str += g.toString();
+		}
+		return str;
+	}
 
 }

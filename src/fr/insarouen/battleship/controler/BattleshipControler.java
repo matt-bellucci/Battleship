@@ -105,8 +105,14 @@ public class BattleshipControler extends AbstractControler {
 	@Override
 	public void discover(int x, int y){
 		Game game = data.getGame(idGame);
-		PlayerInGame opp= game.opponentTo(game.getPlayerByName(name));
-		game.discover(x,y,opp);
+		if (game != null){
+			PlayerInGame opp= game.opponentTo(game.getPlayerByName(name));
+			game.discover(x,y,opp);
+		}
+		else {
+			System.out.println("Erreur : Game inconnu");
+		}
+		
 	}
 	
 	@Override

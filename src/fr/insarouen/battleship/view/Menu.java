@@ -9,35 +9,35 @@ public class Menu extends JMenuBar {
 	private static final String lim = new String("Joueur:");
     private JPanel container = new JPanel();
 	
-    private JMenu newGame = new JMenu("Jouer");
-    private JMenu stats = new JMenu("Statistique");
+    private JMenu info = new JMenu("Battleship");
+    private JMenu stats = new JMenu("Stats");
     private JMenu aide = new JMenu("?");
 	
-    private JMenuItem ia = new JMenuItem("IA");
-    private JMenuItem item4 = new JMenuItem("Enregistrer sous");
+    private JMenuItem createurs = new JMenuItem("Créateurs");
+    private JMenuItem noms = new JMenuItem("DavidHenri\nMatthieu\nThomas");
 	
     public Menu(){
 		// Menu
-		
-	    this.newGame.add(ia);
+		//this.createurs.add(noms);
+	    this.info.add(createurs);
 	    
-	    this.add(newGame);
+	    this.add(info);
 	    this.add(stats);
 	    this.add(aide); 
 	}
 	
     
-	public Menu(String listAdv){
+	public Menu(StateIHM state){
 		// Menu
+		//this.createurs.add(noms);
+	    this.info.add(createurs);
 		try {
-		    
-			this.newGame.add(listAdv);
+			this.aide.add(state.getHelp());
 		} catch (StringIndexOutOfBoundsException e){
 			e.printStackTrace();
 		}
-	    this.newGame.add(ia);
-	    
-	    this.add(newGame);
+		
+	    this.add(info);
 	    this.add(stats);
 	    this.add(aide); 
 	}

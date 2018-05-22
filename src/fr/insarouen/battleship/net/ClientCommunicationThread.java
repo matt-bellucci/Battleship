@@ -206,7 +206,11 @@ public class ClientCommunicationThread extends CommunicationThread {
 				}
 				
 				break;
-				
+			case "GRID":
+				if (commande.get(1).compareTo(ihm.getName()) == 0) {
+					ihm.setPersonalGrid(commande.get(2));
+				}
+				break;
 			case "TIR":
 				ihm.updateGrid(commande.get(1),commande.get(2),commande.get(3),commande.get(4));
 			break;

@@ -8,10 +8,9 @@ import javax.swing.JPanel;
 
 public class PersonalGrid extends JPanel {
 
-
-	 public static final Color NOT_DICOVERED = new Color(200,200,200);
-	 public static final Color TOUCHED = new Color(200,20,20);
-	 public static final Color NOT_TOUCHED = new Color(20,20,200);
+	 public static final Color DICOVERED = new Color(50,20,20);
+	 public static final Color BOAT = new Color(20,20,20);
+	 public static final Color NOT_BOAT = new Color(20,20,100);
 	    
 	 private static int nbLigne = 10;
 	 private static int nbColonne = 10;
@@ -61,16 +60,16 @@ public class PersonalGrid extends JPanel {
 		    for (int i=0;i< nbLigne;i++){
 		    	switch (square[j][i]) {
 		    	case -1 : 
-		    		g.setColor(NOT_TOUCHED);
+		    		g.setColor(DICOVERED);
 		    		g.fillRect(j*largeurCase,i*hauteurCase,largeurCase,hauteurCase);
 		    		break;
 		    	case 0 :
-		    		g.setColor(NOT_DICOVERED);
+		    		g.setColor(NOT_BOAT);
 		    		g.fillRect(j*largeurCase,i*hauteurCase,largeurCase,hauteurCase);
 			    break;
 		    	case 1 :
-				    g.setColor(TOUCHED);
-				    g.fillRect(j*largeurCase,i*hauteurCase,largeurCase,hauteurCase);
+				    g.setColor(BOAT);
+				    g.fillOval(j*largeurCase,i*hauteurCase,largeurCase,hauteurCase);
 				    break;
 		    	}
 			g.setColor(new Color(50,50,50));
@@ -110,6 +109,16 @@ public class PersonalGrid extends JPanel {
 	
 	public void setValueOfSquare(int x,int y, int value){
 		this.square[x][y]= value;
+	}
+
+	public void setGrid(String string) {
+		for (int i=0 ; i<this.getNbLig(); i++){
+			for (int j=0 ; j<this.getNbCol(); j++){
+				String val =string.substring(i*getNbCol()+j,i*getNbCol()+j+1);
+				System.out.println(val+" ");
+				this.square[i][j] = Integer.parseInt(val);
+			}
+		}
 	}
 }
 

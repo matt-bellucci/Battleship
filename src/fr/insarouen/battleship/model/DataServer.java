@@ -20,7 +20,7 @@ public class DataServer implements Observable{
 	}
 	
 	
-	// METHODES RELATIVES A PLAYERS
+	// METHODES RELATIVES AUX JOUEURS HORS PARTIE
 	
 	public String getPlayersList(){
 		return players.list();
@@ -62,11 +62,11 @@ public class DataServer implements Observable{
 							new PlayerInGame(players.getPlayerByName(name2)), 
 							obs2);		
 		
-		this.games.add(g);
-		
 		obs1.update("IDPARTIE:"+g.getIdGame());
 
 		obs2.update("IDPARTIE:"+g.getIdGame());
+		
+		this.games.add(g);
 
 		removeObserver(obs1);
 		removePlayer(name1);
