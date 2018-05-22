@@ -19,7 +19,7 @@ public class BattleshipClient {
 	 */
 	public static void main(String[] args) {
 			String host = "172.18.18.250";
-			int port = 1099;
+			int port = 3258;
 
 			try {
 				System.out.println("Lancement de l'IHM");
