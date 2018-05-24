@@ -23,7 +23,7 @@ import fr.insarouen.battleship.net.*;
 public class IHM extends JFrame {
 
 	// Constantes de l'Interface graphique
-	public static final String GAME_NAME = "Battleship GM";
+	public static final String GAME_NAME = "BattleshipNET";
     public static final Color BACKGROUND_COLOR = new Color(0,0,0);
     
     // Conteneurs de l'interface graphique
@@ -31,9 +31,6 @@ public class IHM extends JFrame {
     
     private Menu menu;
     private ListPlayers listing;
-    
-    private OpposingGrid opposingGrid = new OpposingGrid();
-    private PersonalGrid personalGrid = new PersonalGrid(); 
     
     // Lien de communication avec le serveur
     private boolean connected = false;
@@ -44,8 +41,11 @@ public class IHM extends JFrame {
 	private boolean turn = false;
     
 	// Elements partie
-	JLabel message =new JLabel("MESSAGE");
-	
+	JLabel message =new JLabel("C'est parti !");
+	private OpposingGrid opposingGrid = new OpposingGrid();
+    private PersonalGrid personalGrid = new PersonalGrid(); 
+    
+	// Données perso utiles
 	String pName = "";
 	
     public IHM(String host, int port){
@@ -53,7 +53,8 @@ public class IHM extends JFrame {
     	// Initialiser fenêtre
     	super(GAME_NAME);
     	
-    	// Positionnement fenêtre
+    	//this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icon.png")));
+    		// Positionnement fenêtre
     	this.setLocationRelativeTo(null); //au centre
 	
     	// Fermeture de la connexion Socket et du programme lors de la fermeture de la fenêtre
@@ -85,7 +86,7 @@ public class IHM extends JFrame {
     	container.removeAll();
     	// Affichage fenêtre choix nom
     
-    	infoPlayer();
+    	infoPlayer("Entrez votre pseudo");
     			
     }
 
@@ -103,8 +104,6 @@ public class IHM extends JFrame {
 	//bg.add(rb2);
 	//container.add(rb1,BorderLayout.EAST);
 	//container.add(rb2,BorderLayout.EAST);
-	
-
 
 	public void updateListPlayers(String players) {
 		listing.setPlayersName(players);
@@ -116,13 +115,9 @@ public class IHM extends JFrame {
 			this.listing.setButtonText("Demande de "+name+" refusée.");
 			break;
 		case PLAYER_IDENTIFICATION : 
-			this.setBackground(new Color(50,0,0));
-			this.setTitle(name + "Nom déjà utilisé");
-			
+			infoPlayer("Pseudo indisponible, autre pseudo");
 			break;
-		
 		}
-		
 	}
 	
 	public void setStateIHM(StateIHM state){
@@ -147,33 +142,16 @@ public class IHM extends JFrame {
 		}
 	}
 	
-	private void infoPlayer(){
-		container.removeAll();
-    	
-		this.setTitle("Informations joueur");
-    	this.setSize(200,100);
-    	this.setBackground(BACKGROUND_COLOR);
-
-    	
-    	JButton submit = new JButton("Valider");
-    	final JTextField pseudoField = new JTextField("Pseudo");
-    	pseudoField.setPreferredSize(new Dimension(100, 20));
-    	container.setLayout(new FlowLayout());
-    	container.add(new JLabel("Pseudo : "));
-    	container.add(pseudoField);
-    	submit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				com.send("AvailableName:"+pseudoField.getText());
-			}
-		});
-    	container.add(submit);
-
-    	this.setContentPane(container);
-    	
-    	//Afficher la fenêtre
-    	this.setVisible(true);
+	private void infoPlayer(String comment){
+		JOptionPane jop = new JOptionPane();
+    	 String name = jop.showInputDialog(null, comment, "BattleshipNET", JOptionPane.QUESTION_MESSAGE);
+    		if (name != null) 
+    			com.send("AvailableName:"+name);
+    		else {
+    			infoPlayer("Entrez votre pseudo");
+    		}
 	}
+	
 	
 	public void opponentChoiceInterface(){
 		// On efface tous les composants du conteneur principal
@@ -187,7 +165,7 @@ public class IHM extends JFrame {
     	
     	// Gestion fenêtre
     	this.setTitle("Choix adversaire");
-    	this.setSize(400,600);
+    	this.setSize(400,500);
     	this.setBackground(BACKGROUND_COLOR);
     	
     	// Paramétrage du conteneur principal
@@ -212,6 +190,12 @@ public class IHM extends JFrame {
     	this.setBackground(BACKGROUND_COLOR);
 		this.menu =  new Menu(StateIHM.IN_GAME);
     	this.setJMenuBar(menu);
+    	
+    	if (turn){
+    		message.setFont(new Font("Arial", 10, 20));
+    		message.setText("A vous de jouer");
+    	}
+    	
     	opposingGrid.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -233,9 +217,8 @@ public class IHM extends JFrame {
 		});
     	container.setLayout(layout);
     	container.add(opposingGrid);
-    	container.add(new JLabel());
-
     	container.add(message);
+    	container.add(new JLabel(""));
     	container.add(personalGrid);
 
     	
@@ -246,24 +229,21 @@ public class IHM extends JFrame {
 
 
 	public void updateGrid(String x, String y, String name,String state) {
-		if (name.compareTo(this.pName) == 0){
-			if (state.compareTo("PLOUF")==0){
-				personalGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),-1);
-			}
-			else {
-				personalGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),1);
-			}
+		if (name.equals(this.pName)){
+				personalGrid.discovered(Integer.parseInt(x),Integer.parseInt(y));
+				message.setText("A vous de jouer");
 		}
 		else {
-			if (state.compareTo("PLOUF")==0){
-				opposingGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),-1);
+			if (state.equals("PLOUF")){
+				opposingGrid.setMissed(Integer.parseInt(x),Integer.parseInt(y));
 			}
 			else {
-				opposingGrid.setValueOfSquare(Integer.parseInt(x),Integer.parseInt(y),1);
+				opposingGrid.setTouched(Integer.parseInt(x),Integer.parseInt(y));
+				
 			}
+			message.setText("Résultat de l'attaque : "+state);
 		}
 		
-		message.setText(state);
 		turn = !turn;
 	}
 
@@ -272,7 +252,23 @@ public class IHM extends JFrame {
 		this.pName = string;
 	}
 
+	public String getPlayerName(){
+		return this.pName;
+	}
 
+	public void endGame(String looser) {
+		JOptionPane jop = new JOptionPane();      
+		int option = jop.showConfirmDialog(null, looser+"a perdu\n Voulez-vous recommencer ?","Fin partie", JOptionPane.YES_NO_OPTION,  JOptionPane.QUESTION_MESSAGE);
+		if (option != JOptionPane.NO_OPTION && option != JOptionPane.CLOSED_OPTION){
+			infoPlayer("Entrez votre pseudo");
+		}
+		else {
+			if (connected){
+				com.send("CLOSE");
+			}
+			System.exit(0);
+		}
+	}
 	public void setPersonalGrid(String string) {
 		System.out.println("Mise a jour de la grille perso");
 		this.personalGrid.setGrid(string);
@@ -282,5 +278,7 @@ public class IHM extends JFrame {
 	public String toString(){
 		return "Interface Homme Machine du jeu BattleShipNET";
 	}
+
+
 }	
 	

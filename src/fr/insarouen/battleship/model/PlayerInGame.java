@@ -16,7 +16,7 @@ public class PlayerInGame extends Player {
     public PlayerInGame(Player player){
         super(player.getName(), player.getIP());
         this.playerGrid = new Grid();
-        this.playerBoats = new Boats(0,new Boat(2),new Boat(3),new Boat(3),new Boat(3),new Boat(4),new Boat(4),new Boat(5));
+        this.playerBoats = new Boats(0,new Boat(2),new Boat(3),new Boat(3),new Boat(4),new Boat(4),new Boat(5));
     }
     
     public PlayerInGame(Player player, Boats boats){

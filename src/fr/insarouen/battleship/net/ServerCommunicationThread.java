@@ -143,7 +143,7 @@ public class ServerCommunicationThread extends CommunicationThread implements Ob
 			try {
 				Thread.sleep(1000);
 			} catch (Exception e){}
-			if (commande.get(2).compareTo("oui")==0){
+			if (commande.get(2).equals("oui")){
 				controler.newGame(commande.get(1));
 			}
 			break;

@@ -18,7 +18,7 @@ public class BattleshipClient {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-			String host = "172.18.18.250";
+			String host = "127.0.0.1";
 			int port = 3258;
 
 			try {

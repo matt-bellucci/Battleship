@@ -7,6 +7,15 @@ import java.util.NoSuchElementException;
 import fr.insarouen.battleship.observer.Observable;
 import fr.insarouen.battleship.observer.Observer;
 
+
+/**
+ * Data of BattleshipNetworks. Contains players without game and games 
+ *
+ * @author David, Henri, Matthieu, Thomas
+ * @version 0
+ * 
+ */
+
 public class DataServer implements Observable{
 
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
@@ -74,7 +83,7 @@ public class DataServer implements Observable{
 		removePlayer(name2);
 		System.out.println(g.toString());
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

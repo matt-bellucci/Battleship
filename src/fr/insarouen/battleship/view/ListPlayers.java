@@ -29,7 +29,7 @@ public class ListPlayers extends JPanel implements ActionListener {
 				String item = list.getSelectedValue();
 				if (item != null) {
 					play.setEnabled(true);
-					play.setText("Jouer contre "+item);
+					setButtonText("Jouer contre "+item);
 				}
 				else {
 					play.setEnabled(false);

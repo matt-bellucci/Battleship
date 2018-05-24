@@ -40,21 +40,39 @@ public class Grid {
 	}
 
 	public void placeBoatsRandomly(Boats playerBoats) {
-		for (int j = 0;j<playerBoats.getBoat(1).getLength();j++){
-			this.grid[j][1].setId(1);
-		}
 		Random randomGenerator = new Random();
 		for (int i=0; i< playerBoats.getNbBoats();i++){
 			boolean place = false;
 			while (!place){
-				int x =randomGenerator.nextInt(getSize());
-				int y =randomGenerator.nextInt(getSize());
-				if (x+playerBoats.getBoat(i).getLength()<getSize()){
+				int x = randomGenerator.nextInt(getSize());
+				int y = randomGenerator.nextInt(getSize());
+				int sens = randomGenerator.nextInt(2);
+				int compteur = 0;
+				if ((x+playerBoats.getBoat(i).getLength()<getSize()) && (sens==0) ){
 					for (int j = 0;j<playerBoats.getBoat(i).getLength();j++){
-						this.grid[x+j][y].setId(i);
+						if (grid[x+j][y].getId() < 0){
+							compteur++;
+						}	
+						if (compteur == playerBoats.getBoat(i).getLength()){
+							place = true;
+							for (int k = 0;k<playerBoats.getBoat(i).getLength();k++)					
+								this.grid[x+k][y].setId(i);
+						}
 					}
-					place = true;
 				}
+				else if ((y+playerBoats.getBoat(i).getLength()<getSize()) && (sens==1)){
+					for (int j = 0;j<playerBoats.getBoat(i).getLength();j++){
+						if (grid[x][y+j].getId() < 0){
+							compteur++;
+						}
+						if (compteur == playerBoats.getBoat(i).getLength()){
+							place = true;
+							for (int k = 0;k<playerBoats.getBoat(i).getLength();k++)					
+								this.grid[x][y+k].setId(i);
+						}
+					}
+				}
+			
 			}
 		}
 	}

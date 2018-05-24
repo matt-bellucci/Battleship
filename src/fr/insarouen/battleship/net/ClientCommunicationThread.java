@@ -9,6 +9,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import org.omg.CORBA.CTX_RESTRICT_SCOPE;
+
 
 import fr.insarouen.battleship.view.IHM;
 import fr.insarouen.battleship.view.StateIHM;
@@ -183,7 +185,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 				break;
 			
 			case "REPONSEPARTIE":
-				if (commande.get(2).compareTo("oui") == 0 ){
+				if (commande.get(2).equals("oui") ){
 					ihm.battleInterface(commande.get(1));
 				}
 				else {
@@ -196,7 +198,7 @@ public class ClientCommunicationThread extends CommunicationThread {
 				break;
 				
 			case "AVAILABLENAME":
-				if (commande.get(2).compareTo("yes") == 0 ){
+				if (commande.get(2).equals("yes")){
 					ihm.setPlayerName(commande.get(1));
 					ihm.opponentChoiceInterface();
 					send("LIST");
@@ -207,13 +209,18 @@ public class ClientCommunicationThread extends CommunicationThread {
 				
 				break;
 			case "GRID":
-				if (commande.get(1).compareTo(ihm.getName()) == 0) {
+				System.out.println(commande.get(1) +" = "+ ihm.getPlayerName()+" ? "+(commande.get(1).equals(ihm.getPlayerName())));
+				if (commande.get(1).equals(ihm.getPlayerName())) {
 					ihm.setPersonalGrid(commande.get(2));
 				}
 				break;
 			case "TIR":
 				ihm.updateGrid(commande.get(1),commande.get(2),commande.get(3),commande.get(4));
 			break;
+			
+			case "FINPARTIE":
+					ihm.endGame(commande.get(1));
+				break;
 			
 			case "CLOSE":
 			    closeConnexion = true;

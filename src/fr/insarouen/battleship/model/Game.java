@@ -31,9 +31,9 @@ public class Game implements Observable{
 	
 	public void init(){
 		player1.placeBoatsRandomly();
-		notifyObserver("GRID:"+player1.getName()+":"+player1.getInitialGrid());
+		getObserverByName(player1.getName()).update("GRID:"+player1.getName()+":"+player1.getInitialGrid());
 		player2.placeBoatsRandomly();
-		notifyObserver("GRID:"+player2.getName()+":"+player1.getInitialGrid());
+		getObserverByName(player2.getName()).update("GRID:"+player2.getName()+":"+player2.getInitialGrid());
 		
 	}
 	
@@ -54,7 +54,21 @@ public class Game implements Observable{
 		System.out.println(this.toString());
 		String resultat = player.discover(x,y);
 		notifyObserver("TIR:"+x+":"+y+":"+player.getName()+":"+resultat);
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		if (player.hasLost()){notifyObserver("FINPARTIE:"+player.getName());}
+	}
+	
+	private Observer getObserverByName(String name) throws NoSuchElementException, ArrayIndexOutOfBoundsException{
+		if (name.equals(player1.getName())){
+			return listObserver.get(0);
+		} else {
+			return listObserver.get(1);	
+		}
+		
 	}
 	
 	@Override
