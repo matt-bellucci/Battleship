@@ -20,8 +20,8 @@ public class DataServer implements Observable{
 
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
-	private Players players;
-	private Games games;
+	private Players players; // Joueurs en attente de partie
+	private Games games;	 // Parties en cours
 	
 	public DataServer(){
 		this.players = new Players();
@@ -122,7 +122,10 @@ public class DataServer implements Observable{
 		}
 	}
 	
-	
+	@Override
+	public String toString() {
+		return players.toString()"\n"+games.toSring()"\n";
+	}
 
 
 

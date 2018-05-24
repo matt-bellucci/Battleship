@@ -52,5 +52,15 @@ public class Boats {
                 }
 		return allsunk;	
 	}
+	
+	@Override
+	public String toString() {
+		String toStr = "Liste de bateaux :\n";
+		for (Boat b : boat){
+			toStr += boat.toSring()+"\n";
+		}
+		return toStr;
+	}
+		
 
 }

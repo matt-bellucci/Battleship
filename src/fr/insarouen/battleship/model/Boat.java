@@ -52,4 +52,9 @@ public class Boat {
 	protected int getNbTouched(){
 		return this.nbTouched;
 	}
+	
+	@Override
+	public String toString() {
+		return getId()+" : longueur("+getLength+")\n";
+	}
 }

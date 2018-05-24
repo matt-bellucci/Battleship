@@ -77,4 +77,14 @@ public class Players {
 		}
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		String toStr += "Liste des joueurs : \n";
+		for (Player playr : player){
+			toStr += playr.toString() +"\n";
+			}
+		return toStr;
+	}
+		
 }

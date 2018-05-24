@@ -63,4 +63,9 @@ public class PlayerInGame extends Player {
     	}
     	return str;
     }
+    
+    @Override
+    public String toString(){
+    	return "Grille du joueur : "+getInitialGrid()"\n";
+    }
 }
