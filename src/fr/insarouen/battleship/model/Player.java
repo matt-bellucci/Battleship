@@ -8,7 +8,7 @@ public class Player {
 	private String name;
 	private InetAddress ip;
 	
-	private stats = new Stats(); 
+	private Stats stats = new Stats(); 
 	
 	public Player(){
 		byte[] ip = {127,0,0,1};

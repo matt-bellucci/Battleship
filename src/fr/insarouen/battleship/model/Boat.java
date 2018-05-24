@@ -55,6 +55,6 @@ public class Boat {
 	
 	@Override
 	public String toString() {
-		return getId()+" : longueur("+getLength+")\n";
+		return getId()+" : longueur("+getLength()+")\n";
 	}
 }

@@ -124,7 +124,7 @@ public class DataServer implements Observable{
 	
 	@Override
 	public String toString() {
-		return players.toString()"\n"+games.toSring()"\n";
+		return players.toString()+"\n"+games.toString()+"\n";
 	}
 
 

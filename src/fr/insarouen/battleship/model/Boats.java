@@ -56,9 +56,9 @@ public class Boats {
 	@Override
 	public String toString() {
 		String toStr = "Liste de bateaux :\n";
-		for (Boat b : boat){
-			toStr += boat.toSring()+"\n";
-		}
+		/*for (Boat b : mapBoats){
+			toStr += b.toString()+"\n";
+		}*/
 		return toStr;
 	}
 		
