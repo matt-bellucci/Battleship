@@ -4,15 +4,28 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Class used to represent collection of all boats. 
+ */
+
 public class Boats {
 	
 	private HashMap<Integer, Boat> mapBoats;
 	private Integer nextKey;
 	
+
+	/**
+	  * Creates a new collection of boats (using HashMap) 
+	  */
+
 	public Boats(){
 		this.mapBoats = new HashMap<>();
 	}
 	
+	/**
+	  * Create a new collection of boats, giving an id to each of them.
+	  */
+
 	public Boats(int firstKey, Boat ... boats){
 		int key=firstKey;
 		this.mapBoats = new HashMap<>();
@@ -24,23 +37,43 @@ public class Boats {
 		this.nextKey = key;
 	}
 	
+	/**
+	  * Adds a boat to the collection.
+	  */
+
 	public void addBoat(Boat boat){
             this.mapBoats.put(nextKey, boat);
             this.nextKey++;
         }
         
+    /**
+	  * Removes a boat from the collection 
+	  */    
+
 	public void removeBoat(int id){
 		this.mapBoats.remove(id);
 	}
         
+	/**
+	  * Return a specific boat from the collection
+	  */
+
 	public Boat getBoat(int id){
 		return mapBoats.get(id);
 	}
 	
+	/**
+	  * Returns the number of boats remaining.
+	  */
+
 	public int getNbBoats(){
 		return mapBoats.size();
 	}
-	
+
+	/**
+	  * Says wether all boats are sunk or not. 
+	  */
+
 	public boolean allSunk(){
 		boolean allsunk = true ;
                 Integer key;

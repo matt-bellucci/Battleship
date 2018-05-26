@@ -1,5 +1,9 @@
 package fr.insarouen.battleship.model;
 
+/**
+* Special type of boat
+*/
+
 public class IronClad extends Boat {
 
 	public IronClad() {

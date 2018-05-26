@@ -7,6 +7,9 @@ import java.util.NoSuchElementException;
 import fr.insarouen.battleship.observer.Observable;
 import fr.insarouen.battleship.observer.Observer;
 
+/**
+* Describes a game.
+*/
 
 public class Game implements Observable{
 
@@ -16,6 +19,10 @@ public class Game implements Observable{
 	
 	private static int numberOfGame =0;
 	
+	/**
+	  * Constructs a game based on two players 
+	  */
+
 	public Game(PlayerInGame p1, Observer o1, PlayerInGame p2, Observer o2) {
 		numberOfGame++;
 		this.idGame = numberOfGame;
@@ -29,6 +36,10 @@ public class Game implements Observable{
 		
 	}
 	
+	/**
+	  * Initializes the new game by placing randomly all boats for each player.
+	  */
+
 	public void init(){
 		player1.placeBoatsRandomly();
 		getObserverByName(player1.getName()).update("GRID:"+player1.getName()+":"+player1.getInitialGrid());
@@ -36,20 +47,37 @@ public class Game implements Observable{
 		getObserverByName(player2.getName()).update("GRID:"+player2.getName()+":"+player2.getInitialGrid());
 		
 	}
+
+	/**
+	  * Return a player in game knowing his name.
+	  */
 	
 	public PlayerInGame getPlayerByName(String name){
             if ( name.equals(player1.getName()) ){return player1;}
             else{return player2;}
 	}
+
+	/**
+	  * Return the opponent of the player whose name is known.
+	  */
+
 	public PlayerInGame opponentTo(PlayerInGame player){
 		if ( player.equals(player1) ){return player2;}
 		else{return player1;}
 	}
 
+	/**
+	  * Returns the game id.
+	  */
+
 	public int getIdGame() {
 		return idGame;
 	}
     
+	/**
+	  * 
+	  */
+
 	public void discover(int x, int y, PlayerInGame player){
 		System.out.println(this.toString());
 		String resultat = player.discover(x,y);
@@ -62,6 +90,10 @@ public class Game implements Observable{
 		if (player.hasLost()){notifyObserver("FINPARTIE:"+player.getName());}
 	}
 	
+	/**
+	  * 
+	  */
+
 	private Observer getObserverByName(String name) throws NoSuchElementException, ArrayIndexOutOfBoundsException{
 		if (name.equals(player1.getName())){
 			return listObserver.get(0);

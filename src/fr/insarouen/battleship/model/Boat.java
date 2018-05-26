@@ -20,35 +20,66 @@ public class Boat {
 		return this.orientation;
 	} */
 	
+
+	/**
+	  * Constructs a boat with a standard length (3).
+	  */
 	public Boat(){
 		this.length = 3;
 	}
 	
+	/**
+	  * Constructs a boat with a specific length.
+	  */
+
 	public Boat(int length){
 		this.length = length;
 	}
 	
+	/**
+	  * Allows to initialize boat's id.
+	  */
+
 	public void setId(int id){
 		this.id = id;
 	}
 	
+	/**
+	  * Returns the boat id. 
+	  */
+
 	public int getId(){
 		return this.id;
 	}
 	
+	/**
+	  * Add 1 to nbTouched. 
+	  */
 	
 	public void touched(){
 		this.nbTouched++;
 	}
 	
+	/**
+	  * Says wether the boat is sunk or not.
+	  */
+
 	public boolean isSunk() {
 		return (length == nbTouched);
 	}
 	
+	/**
+	  * Return the boat length. 
+	  */
+
 	public int getLength(){
 		return this.length;
 	}
 	
+	/**
+	  * Return how many times the boat has been touched.
+	  */
+
 	protected int getNbTouched(){
 		return this.nbTouched;
 	}

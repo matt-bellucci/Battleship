@@ -23,6 +23,10 @@ public class DataServer implements Observable{
 	private Players players; // Joueurs en attente de partie
 	private Games games;	 // Parties en cours
 	
+	/**
+	  *  Constructs a list of players and a list of games.
+	  */
+
 	public DataServer(){
 		this.players = new Players();
 		this.games = new Games();
@@ -31,25 +35,46 @@ public class DataServer implements Observable{
 	
 	// METHODES RELATIVES AUX JOUEURS HORS PARTIE
 	
+
+	/**
+	  * Returns a list that contains the name of each player.
+	  */
+
 	public String getPlayersList(){
 		return players.list();
 	}
 	
+	/**
+	  * Adds a new player, knowing only his ip adress. 
+	  */
+
 	public void newPlayer(InetAddress ip){
 		this.players.add(ip);
 		System.out.println("Nouveau Joueur"+ip);
 	}
 	
+	/**
+	  * Adds a new player, knowing both his name and ip adress.
+	  */
+
 	public void newPlayer(String name, InetAddress ip){
 		this.players.add(name,ip);
 		System.out.println("Nouveau Joueur"+name+"/"+ip);
 	}
 	
+	/**
+	  * Removes a player knowing his name.
+	  */
+
 	public void removePlayer(String name){
 		this.players.remove(name);
 		System.out.println("Suppression Joueur : "+name);
 	}
 	
+	/**
+	  * Says if a specific name is available or not.
+	  */
+
 	public boolean isAvailableName(String name) {
 		return players.isAvailableName(name);
 	}
