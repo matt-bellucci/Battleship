@@ -29,7 +29,7 @@ public class Boats {
 	public Boats(int firstKey, Boat ... boats){
 		int key=firstKey;
 		this.mapBoats = new HashMap<>();
-		for( Boat b : boats){
+		for (Boat b : boats){
 			mapBoats.put(key, b);
 			b.setId(key);
 			key++;
@@ -46,7 +46,7 @@ public class Boats {
             this.nextKey++;
         }
         
-    /**
+    	/**
 	  * Removes a boat from the collection 
 	  */    
 
