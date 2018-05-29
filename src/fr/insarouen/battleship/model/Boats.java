@@ -34,6 +34,9 @@ public class Boats {
 			b.setId(key);
 			key++;
 		}
+		//Boat i = new IronClad();
+		mapBoats.put(key,new IronClad());
+		
 		this.nextKey = key;
 	}
 	
@@ -89,9 +92,9 @@ public class Boats {
 	@Override
 	public String toString() {
 		String toStr = "Liste de bateaux :\n";
-		/*for (Boat b : mapBoats){
+		for (Boat b : mapBoats.values()){
 			toStr += b.toString()+"\n";
-		}*/
+		}
 		return toStr;
 	}
 		

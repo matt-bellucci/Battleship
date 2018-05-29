@@ -8,7 +8,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
- * Managing socket connections
+ * <b> Managing socket connections  </b>
+ * 
+ * <p> The CommunicationThread class give the possibility to manage the sending of standardized messages thanks to a socket connection </p>
  *
  * @author David ALBERT
  * @version 0
@@ -17,8 +19,19 @@ import java.util.ArrayList;
 
 public abstract class CommunicationThread extends Thread {
 
+	/**
+	 * Socket channel 
+	 */
 	protected Socket socket = null;
+	
+	/**
+	 * Stream to write messages to the other side of the socket connection
+	 */
     protected PrintWriter writer = null;
+    
+    /**
+	 * Stream to receive messages by the socket connection
+	 */
     protected BufferedInputStream reader = null;
     
     /**
@@ -78,19 +91,21 @@ public abstract class CommunicationThread extends Thread {
 	 
 	 /**
 	  * Read on the channel the received message
+	  * @return Message received
 	  */
 	 public abstract String receive();
 	 
 	 /**
 	  * Write on the channel the message to send
-	  *	@return String
+	  * @param str
+	  * 	Message to send
 	  */
 	 public abstract void send(String str);
 	 
 	 /**
 	  * Modify the received string to be interpreted
 	  * @param String
-	  * @return ArrayList<String>
+	  * @return List of String with each part of the message
 	  */
 	 protected abstract ArrayList<String> decode(String str);
 	 
