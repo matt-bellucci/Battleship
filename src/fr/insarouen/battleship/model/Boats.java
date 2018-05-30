@@ -1,8 +1,10 @@
 package fr.insarouen.battleship.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Collection;
 
 /**
  * Class used to represent collection of all boats. 
@@ -29,7 +31,7 @@ public class Boats {
 	public Boats(int firstKey, Boat ... boats){
 		int key=firstKey;
 		this.mapBoats = new HashMap<>();
-		for (Boat b : boats){
+		for( Boat b : boats){
 			mapBoats.put(key, b);
 			b.setId(key);
 			key++;
@@ -46,7 +48,7 @@ public class Boats {
             this.nextKey++;
         }
         
-    	/**
+    /**
 	  * Removes a boat from the collection 
 	  */    
 
@@ -94,6 +96,15 @@ public class Boats {
 		}*/
 		return toStr;
 	}
-		
+        
+        /**
+         * returns an arrayList of all the boats 
+         * so we can iterate through all the boats
+         */
+	public ArrayList<Boat> values(){
+		ArrayList<Boat> list = new ArrayList<>(mapBoats.values());
+                return list;
+	}
+
 
 }

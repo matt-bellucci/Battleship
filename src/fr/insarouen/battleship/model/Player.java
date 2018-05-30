@@ -12,7 +12,6 @@ public class Player {
 	private String name;
 	private InetAddress ip;
 	
-	private Stats stats = new Stats(); 
 	
 	/**
 	  * Constructs a new player by recovering his ip adress, calling him "Anonyme".
