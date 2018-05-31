@@ -151,10 +151,6 @@ public class DataServer implements Observable{
 	public String toString() {
 		return players.toString()+"\n"+games.toString()+"\n";
 	}
-
-
-
 	
-
-	
+		
 }

@@ -4,30 +4,32 @@ import java.lang.Enum;
 
 public class Boat {
 
-	/*public enum orientation { 
-		Top, 
-		Bot, 
-		Left, 
+
+	/*public enum orientation {
+		Top,
+		Bot,
+		Left,
 		Right;
 	} */
 
+	private final static int constLength = 3;
 	// private int coordTete = new int[2];
 	private int id;
 	private int length;
 	private int nbTouched =0;
-	
+
 	/*public orientation getOrientation(){
 		return this.orientation;
 	} */
-	
+
 
 	/**
 	  * Constructs a boat with a standard length (3).
 	  */
 	public Boat(){
-		this.length = 3;
+		this.length = constLength;
 	}
-	
+
 	/**
 	  * Constructs a boat with a specific length.
 	  */
@@ -35,7 +37,7 @@ public class Boat {
 	public Boat(int length){
 		this.length = length;
 	}
-	
+
 	/**
 	  * Allows to initialize boat's id.
 	  */
@@ -43,23 +45,23 @@ public class Boat {
 	public void setId(int id){
 		this.id = id;
 	}
-	
+
 	/**
-	  * Returns the boat id. 
+	  * Returns the boat id.
 	  */
 
 	public int getId(){
 		return this.id;
 	}
-	
+
 	/**
-	  * Add 1 to nbTouched. 
+	  * Add 1 to nbTouched.
 	  */
-	
+
 	public void touched(){
 		this.nbTouched++;
 	}
-	
+
 	/**
 	  * Says wether the boat is sunk or not.
 	  */
@@ -67,15 +69,15 @@ public class Boat {
 	public boolean isSunk() {
 		return (length == nbTouched);
 	}
-	
+
 	/**
-	  * Return the boat length. 
+	  * Return the boat length.
 	  */
 
 	public int getLength(){
 		return this.length;
 	}
-	
+
 	/**
 	  * Return how many times the boat has been touched.
 	  */
@@ -83,7 +85,7 @@ public class Boat {
 	protected int getNbTouched(){
 		return this.nbTouched;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getId()+" : longueur("+getLength()+")\n";

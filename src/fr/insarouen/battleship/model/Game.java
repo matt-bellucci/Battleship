@@ -17,7 +17,7 @@ public class Game implements Observable{
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	private int idGame ;
 	
-	private static int numberOfGame =0;
+	private static int numberOfGame = 0;
 	
 	/**
 	  * Constructs a game based on two players 
